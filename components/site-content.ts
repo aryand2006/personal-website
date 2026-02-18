@@ -65,39 +65,41 @@ export const projects: Project[] = [
       "Explainability, grounding, and reliability in high-stakes environments."
   },
   {
-    title: "Algorithmic Trading Signal Model",
-    subtitle: "Systematic Predictive Engine",
+    title: "ShadowStack",
+    subtitle: "Verified Language Modernization Engine",
     description:
-      "Developed a systematic predictive signal model using statistical pattern detection across multiple timeframes, prioritizing robustness over curve-fit performance.",
+      "Built an enterprise-grade modernization platform for safe legacy-to-modern code transformations with multi-layer verification and human-in-the-loop controls.",
     highlights: [
-      "Feature engineering across rolling windows and regime shifts",
-      "Signal decay modeling with noise-aware calibration",
-      "Risk-adjusted return optimization under constraints",
-      "Backtesting engine with realistic transaction cost modeling",
-      "Evaluation via Sharpe, Sortino, and max drawdown metrics",
-      "Volatility-adjusted position sizing for controlled exposure"
+      "Rule-driven transformation pipeline for structured code evolution",
+      "Verification stack with static checks, confidence scoring, and audit traces",
+      "Human approval checkpoints for safety in critical code paths",
+      "Migration intelligence layer to reduce regressions during modernization",
+      "Operational workflows designed for enterprise compliance and reliability",
+      "Architecture optimized for iterative large-scale migrations"
     ],
     technologies: [
-      "Python",
-      "Pandas",
-      "NumPy",
-      "Backtesting",
-      "Quant Modeling"
+      "TypeScript",
+      "Node.js",
+      "Static Analysis",
+      "Verification Pipelines",
+      "Enterprise Workflows"
     ],
-    focus: "Signal robustness over overfitting."
+    focus: "Provably safer modernization with practical developer velocity."
   },
   {
-    title: "SaveWise",
-    subtitle: "Hackathon Winner",
+    title: "Dinect",
+    subtitle: "Cloud-Native Restaurant OS",
     description:
-      "Built a subscription analysis and automation engine that identifies wasteful recurring payments and simulates optimization opportunities under hackathon constraints.",
+      "Developed a production-ready restaurant operating platform with QR ordering, kitchen orchestration, and analytics across customer and operator workflows.",
     highlights: [
-      "Transaction parsing and domain-specific categorization pipeline",
-      "Pattern recognition over recurring spending behavior",
-      "Heuristic cancellation-probability modeling",
-      "Rapid UI implementation under aggressive timeline pressure"
+      "End-to-end architecture spanning customer ordering to kitchen execution",
+      "Real-time order status flow and operational event handling",
+      "Data model for menu management, fulfillment, and restaurant analytics",
+      "Built for reliability under concurrent usage in time-sensitive environments",
+      "Clear separation between product surfaces and backend domain logic"
     ],
-    technologies: ["React", "Node.js", "Transaction Parsing", "Heuristics"]
+    technologies: ["Next.js", "Fastify", "Prisma", "PostgreSQL", "Cloud APIs"],
+    focus: "Execution speed and operational reliability for real-world workflows."
   }
 ];
 

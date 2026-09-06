@@ -133,7 +133,7 @@ function ProofBody({
     group.current.scale.setScalar(spec.scale * pulse);
   });
 
-  const color = spec.signal ? "#3de8d4" : "#e8f7fa";
+  const color = spec.signal ? "#0f9e8f" : "#0b2c38";
   const matProps = {
     color,
     roughness: 0.32,
@@ -141,7 +141,7 @@ function ProofBody({
     transparent: true,
     opacity: spec.wire ? 0.5 : 0.94,
     wireframe: !!spec.wire,
-    emissive: spec.signal ? "#3de8d4" : "#000000",
+    emissive: spec.signal ? "#0f9e8f" : "#1a4a5a",
     emissiveIntensity: spec.signal ? 0.18 : 0
   };
 
@@ -226,12 +226,12 @@ function Ribbon({
   return (
     <mesh ref={ref} geometry={geom}>
       <meshStandardMaterial
-        color={index % 2 === 0 ? "#3de8d4" : "#e8f7fa"}
+        color={index % 2 === 0 ? "#0f9e8f" : "#0b2c38"}
         transparent
         opacity={0.35}
         roughness={0.4}
         metalness={0.3}
-        emissive={index % 2 === 0 ? "#3de8d4" : "#e8f7fa"}
+        emissive={index % 2 === 0 ? "#0f9e8f" : "#0b2c38"}
         emissiveIntensity={0.12}
       />
     </mesh>
@@ -269,9 +269,9 @@ function DustField({ scroll }: { scroll: React.MutableRefObject<number> }) {
       </bufferGeometry>
       <pointsMaterial
         size={0.025}
-        color="#e8f7fa"
+        color="#0f9e8f"
         transparent
-        opacity={0.45}
+        opacity={0.35}
         sizeAttenuation
         depthWrite={false}
       />
@@ -308,14 +308,14 @@ function GlassOrb({
       <sphereGeometry args={[1, 64, 64]} />
       <meshPhysicalMaterial
         color="#e8f7fa"
-        transmission={0.9}
+        transmission={0.92}
         thickness={0.85}
         roughness={0.08}
         metalness={0.02}
         ior={1.45}
         transparent
         opacity={1}
-        attenuationColor="#3de8d4"
+        attenuationColor="#0f9e8f"
         attenuationDistance={2.2}
         clearcoat={0.4}
         clearcoatRoughness={0.2}
@@ -338,13 +338,13 @@ function SceneContents() {
 
   return (
     <>
-      <color attach="background" args={["#061820"]} />
-      <fog attach="fog" args={["#061820", 6.5, 26]} />
-      <ambientLight intensity={0.42} />
-      <directionalLight position={[5, 7, 3]} intensity={1.35} color="#d9fbff" />
-      <directionalLight position={[-6, -2, -5]} intensity={0.85} color="#3de8d4" />
-      <pointLight position={[2, 3, 1]} intensity={0.7} color="#e8f7fa" />
-      <pointLight position={[-3, -1, -2]} intensity={0.45} color="#3de8d4" />
+      <color attach="background" args={["#cfeaf3"]} />
+      <fog attach="fog" args={["#cfeaf3", 8, 28]} />
+      <ambientLight intensity={0.85} />
+      <directionalLight position={[5, 7, 3]} intensity={1.35} color="#ffffff" />
+      <directionalLight position={[-6, -2, -5]} intensity={0.85} color="#0f9e8f" />
+      <pointLight position={[2, 3, 1]} intensity={0.7} color="#0b2c38" />
+      <pointLight position={[-3, -1, -2]} intensity={0.45} color="#0f9e8f" />
 
       {!reduced && (
         <>
@@ -359,7 +359,7 @@ function SceneContents() {
             size={2.5}
             speed={0.35}
             opacity={0.35}
-            color="#3de8d4"
+            color="#0f9e8f"
           />
         </>
       )}

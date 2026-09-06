@@ -4,7 +4,11 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { experience, education } from "@/components/site-content";
 
-export default function ExperienceRail() {
+export default function ExperienceRail({
+  compact = false
+}: {
+  compact?: boolean;
+}) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -13,21 +17,31 @@ export default function ExperienceRail() {
   const spineScale = useTransform(scrollYProgress, [0.08, 0.9], [0.12, 1]);
 
   return (
-    <section ref={ref} className="relative py-24 sm:py-32" id="experience">
-      <div className="max-w-2xl">
-        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
-          Internship experience
-        </p>
-        <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-bone sm:text-5xl">
-          Path so far.
-        </h2>
-        <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
-          One role per side of the spine — dated, detailed, and tilted into the
-          glass.
-        </p>
-      </div>
+    <section
+      ref={ref}
+      className={`relative ${compact ? "py-12 sm:py-16" : "py-24 sm:py-32"}`}
+      id="experience"
+    >
+      {!compact && (
+        <div className="max-w-2xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
+            Internship experience
+          </p>
+          <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-bone sm:text-5xl">
+            Path so far.
+          </h2>
+          <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
+            One role per side of the spine — dated and tilted into the glass.
+            Full career page:{" "}
+            <a href="/work" className="text-signal underline-offset-4 hover:underline">
+              Work
+            </a>
+            .
+          </p>
+        </div>
+      )}
 
-      <div className="glass mt-10 rounded-2xl p-6 sm:p-8">
+      <div className={`glass rounded-2xl p-6 sm:p-8 ${compact ? "mt-0" : "mt-10"}`}>
         <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-steel">
           Education · {education.when}
         </p>
@@ -53,10 +67,10 @@ export default function ExperienceRail() {
         style={{ perspective: "1200px", perspectiveOrigin: "50% 30%" }}
       >
         <div className="absolute bottom-4 left-4 top-4 w-px sm:left-1/2 sm:-translate-x-1/2">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-signal/35 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-signal/40 to-transparent" />
           <motion.div
             style={{ scaleY: spineScale }}
-            className="absolute inset-x-0 top-0 h-full origin-top bg-signal shadow-[0_0_28px_rgba(61,232,212,0.55)]"
+            className="absolute inset-x-0 top-0 h-full origin-top bg-signal shadow-[0_0_28px_rgba(15,158,143,0.45)]"
           />
         </div>
 
@@ -66,11 +80,10 @@ export default function ExperienceRail() {
             return (
               <li key={`${job.org}-${job.when}`} className="relative">
                 <span
-                  className="absolute left-4 top-7 z-20 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-signal bg-ink2 shadow-[0_0_22px_rgba(61,232,212,0.85)] sm:left-1/2"
+                  className="absolute left-4 top-7 z-20 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-signal bg-white shadow-[0_0_22px_rgba(15,158,143,0.65)] sm:left-1/2"
                   aria-hidden
                 />
 
-                {/* Desktop alternating layout */}
                 <div className="hidden sm:grid sm:grid-cols-2">
                   <div className={`pr-14 ${left ? "" : "flex justify-end"}`}>
                     {left ? (
@@ -79,7 +92,7 @@ export default function ExperienceRail() {
                       <TimelineDate when={job.when} org={job.org} align="right" />
                     )}
                   </div>
-                  <div className={`pl-14 ${left ? "" : ""}`}>
+                  <div className="pl-14">
                     {left ? (
                       <TimelineDate when={job.when} org={job.org} align="left" />
                     ) : (
@@ -88,7 +101,6 @@ export default function ExperienceRail() {
                   </div>
                 </div>
 
-                {/* Mobile stack */}
                 <div className="space-y-3 pl-10 sm:hidden">
                   <TimelineDate when={job.when} org={job.org} align="left" />
                   <TimelineCard job={job} side="right" />
@@ -122,7 +134,7 @@ function TimelineDate({
       <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-signal">
         {when}
       </p>
-      <p className="font-display mt-2 text-2xl font-bold tracking-tight text-bone/50">
+      <p className="font-display mt-2 text-2xl font-bold tracking-tight text-bone/45">
         {org}
       </p>
     </motion.div>

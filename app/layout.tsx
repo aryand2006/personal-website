@@ -69,9 +69,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
     >
       <body className="font-body antialiased">
         <div className="grain" aria-hidden />
+        <div className="aurora" aria-hidden>
+          <span className="left-[-10%] top-[-10%] h-[28rem] w-[28rem] bg-cyan-300/50" />
+          <span className="right-[-5%] top-[20%] h-[22rem] w-[22rem] bg-teal-300/40" style={{animationDelay:"2s"}} />
+          <span className="bottom-[-10%] left-[30%] h-[24rem] w-[24rem] bg-sky-300/45" style={{animationDelay:"4s"}} />
+        </div>
         <Cursor />
-        <SceneMount className="pointer-events-none fixed inset-0 -z-10 h-full w-full" />
-        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-ink/25 to-ink/80" />
+        <SceneMount className="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-70" />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-white/30 via-transparent to-[#cfeaf3]/85" />
         <Navbar />
         <div className="relative z-10">{children}</div>
         <Footer />

@@ -47,7 +47,7 @@ export default function Hero() {
           <Link
             href="/#experience"
             data-cursor
-            className="inline-flex items-center rounded-lg bg-signal px-6 py-3.5 font-display text-sm font-semibold tracking-wide text-ink transition hover:brightness-110"
+            className="inline-flex items-center rounded-lg bg-signal px-6 py-3.5 font-display text-sm font-semibold tracking-wide text-white transition hover:brightness-110"
           >
             See experience
           </Link>

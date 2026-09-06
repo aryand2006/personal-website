@@ -4,14 +4,14 @@ const TICKER = [
   "Wincent",
   "EY",
   "Otaru",
+  "SKIDOS",
   "concord",
   "scroll",
   "stratum",
   "aperture",
   "grit",
   "Jarvis",
-  "HumBox",
-  "affidavit"
+  "HumBox"
 ];
 
 export default function Marquee() {
@@ -22,7 +22,7 @@ export default function Marquee() {
         {row.map((item, i) => (
           <span
             key={`${item}-${i}`}
-            className="font-display text-2xl font-semibold tracking-tight text-bone/30 sm:text-3xl"
+            className="font-display text-2xl font-semibold tracking-tight text-bone/25 sm:text-3xl"
           >
             {item}
             <span className="ml-10 text-signal">/</span>

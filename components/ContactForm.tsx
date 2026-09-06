@@ -52,7 +52,7 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        className="rounded-lg bg-signal px-6 py-3 font-display text-sm font-semibold tracking-wide text-ink transition hover:brightness-110"
+        className="rounded-lg bg-signal px-6 py-3 font-display text-sm font-semibold tracking-wide text-white transition hover:brightness-110"
       >
         Send message
       </button>

@@ -45,7 +45,7 @@ export default function Cursor() {
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[60] mix-blend-difference"
+      className="pointer-events-none fixed left-0 top-0 z-[60]"
       style={{
         x: sx,
         y: sy,
@@ -55,7 +55,7 @@ export default function Cursor() {
     >
       <div
         className={`rounded-full border border-bone transition-all duration-200 ${
-          hovering ? "h-12 w-12 bg-bone/10" : "h-3 w-3 bg-signal"
+          hovering ? "h-12 w-12 border-bone/40 bg-bone/5" : "h-3 w-3 bg-signal"
         }`}
       />
     </motion.div>

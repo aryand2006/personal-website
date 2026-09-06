@@ -99,6 +99,19 @@ export const experience: Experience[] = [
       "Architected backend + LLM workflows on Python, Firebase, GCP (Cloud Functions, Firestore, Compute Engine), LangChain",
       "Integrated vector databases and REST APIs for dynamic prompt evaluation"
     ]
+  },
+  {
+    org: "SKIDOS",
+    role: "Project Intern",
+    when: "Earlier",
+    summary:
+      "Product innovation for an edtech games company — shipped educational games and an AI mock-interview assistant.",
+    points: [
+      "Developed 3 educational games that collectively generated ~$23K in new revenue",
+      "Built an AI-driven mock interview assistant on OpenAI’s DaVinci model",
+      "Parsed supervisor instructions into effective LLM prompts to simulate realistic hiring conversations"
+    ],
+    href: "https://www.linkedin.com/company/skidos-games"
   }
 ];
 

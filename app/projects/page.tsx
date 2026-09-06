@@ -18,11 +18,15 @@ export default async function ProjectsPage() {
           Projects
         </p>
         <h1 className="font-display mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
-          Build logs.
+          What I&apos;ve built.
         </h1>
         <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
-          Flagship instruments plus public repositories — the ones you can clone
-          and try to break.
+          Personal trading systems, hackathon wins, and public verification
+          instruments — separate from internship experience on{" "}
+          <a href="/work" className="text-signal underline-offset-4 hover:underline">
+            Work
+          </a>
+          .
         </p>
       </header>
 
@@ -36,7 +40,7 @@ export default async function ProjectsPage() {
         ))}
       </div>
 
-      <section className="mt-24 border-t border-signal/15 pt-16">
+      <section className="mt-24 border-t border-signal/20 pt-16">
         <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
           GitHub
         </p>

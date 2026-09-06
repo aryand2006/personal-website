@@ -18,15 +18,32 @@ export const navLinks = [
 ];
 
 export const heroTags = [
+  "Distributed Systems",
   "Verification",
   "Program Analysis",
-  "Computational Finance",
   "Research Governance",
   "Falsification Gates",
   "CS @ CMU"
 ];
 
 export const projects: Project[] = [
+
+  {
+    title: "concord",
+    subtitle: "Deterministically Verified Raft KV",
+    description:
+      "From-scratch replicated key-value store with a sans-IO Raft core and a FoundationDB-style deterministic simulator. Seeded partitions, crashes, and message faults; continuous safety invariants; Wing–Gong linearizability checking. Same seed replays any failure bit-for-bit.",
+    highlights: [
+      "Sans-IO Raft: Step(event) → effects; no clocks or sockets in the state machine",
+      "Deterministic simulation with drop/dup/reorder/partition/crash/restart",
+      "Election safety + state-machine safety monitors on every campaign",
+      "Per-key linearizability checker over client Put/Get histories",
+      "500 randomized fault seeds with zero failures in CI smoke"
+    ],
+    technologies: ["Go", "Raft", "Deterministic Simulation", "Linearizability"],
+    focus: "Don't trust a consensus protocol you can't falsify.",
+    href: "https://github.com/aryand2006/concord"
+  },
   {
     title: "affidavit",
     subtitle: "Research-Governance Gate for Strategy Results",

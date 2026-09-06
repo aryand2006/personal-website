@@ -1,28 +1,33 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import dynamic from "next/dynamic";
 import { Syne, Public_Sans, IBM_Plex_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SceneMount from "@/components/three/SceneMount";
-import Cursor from "@/components/Cursor";
+
+const Cursor = dynamic(() => import("@/components/Cursor"), { ssr: false });
 
 const syne = Syne({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["500", "600", "700", "800"]
+  weight: ["600", "700", "800"],
+  display: "swap"
 });
 
 const publicSans = Public_Sans({
   subsets: ["latin"],
   variable: "--font-body",
-  weight: ["400", "500", "600"]
+  weight: ["400", "500", "600"],
+  display: "swap"
 });
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
-  weight: ["400", "500"]
+  weight: ["400", "500"],
+  display: "swap"
 });
 
 export const metadata: Metadata = {

@@ -35,7 +35,7 @@ export default function HomeGateways() {
   return (
     <section className="pb-28 pt-4 sm:pb-36 sm:pt-8" aria-label="Explore">
       <p className="max-w-md text-sm leading-relaxed text-boneDim sm:text-base">
-        Short version here. Open a page for the full story.
+        Overview here. Full detail on each page.
       </p>
 
       <ul className="mt-12 border-t border-signal/25">

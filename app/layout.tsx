@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import dynamic from "next/dynamic";
 import { Syne, Public_Sans, IBM_Plex_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import FunBackdrop from "@/components/FunBackdrop";
 import SceneMount from "@/components/three/SceneMount";
-
-const Cursor = dynamic(() => import("@/components/Cursor"), { ssr: false });
 
 const syne = Syne({
   subsets: ["latin"],
@@ -74,22 +70,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
       className={`${syne.variable} ${publicSans.variable} ${plexMono.variable}`}
     >
       <body className="font-body antialiased">
-        {/* Background layers must stay z >= 0 or they paint under body and disappear */}
         <div className="aurora" aria-hidden>
-          <span className="left-[-10%] top-[-10%] h-[28rem] w-[28rem] bg-cyan-300/40" />
+          <span className="left-[-10%] top-[-10%] h-[28rem] w-[28rem] bg-cyan-300/35" />
           <span
-            className="right-[-5%] top-[20%] h-[22rem] w-[22rem] bg-teal-300/30"
+            className="right-[-5%] top-[20%] h-[22rem] w-[22rem] bg-teal-300/25"
             style={{ animationDelay: "2s" }}
           />
           <span
-            className="bottom-[-10%] left-[30%] h-[24rem] w-[24rem] bg-sky-300/35"
+            className="bottom-[-10%] left-[30%] h-[24rem] w-[24rem] bg-sky-300/28"
             style={{ animationDelay: "4s" }}
           />
         </div>
-        <FunBackdrop />
-        <SceneMount className="scene-root pointer-events-none fixed inset-0 z-[1]" />
+        <SceneMount className="scene-root pointer-events-none fixed inset-0 z-[1] opacity-80" />
         <div className="grain" aria-hidden />
-        <Cursor />
         <Navbar />
         <div className="relative z-10">{children}</div>
         <div className="relative z-10">

@@ -127,141 +127,17 @@ a {
   position: absolute;
   border-radius: 9999px;
   filter: blur(60px);
-  opacity: 0.55;
-  animation: float-blob 14s ease-in-out infinite;
-}
-
-.fun-backdrop {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.fun-orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(2px);
-  mix-blend-mode: multiply;
-}
-
-.fun-orb-a {
-  top: 18%;
-  left: 12%;
-  width: 18rem;
-  height: 18rem;
-  background: radial-gradient(circle at 35% 35%, #7ee0d4 0%, #0f9e8f 55%, transparent 72%);
-  opacity: 0.55;
-  animation: fun-drift-a 11s ease-in-out infinite;
-}
-
-.fun-orb-b {
-  top: 42%;
-  right: 8%;
-  width: 14rem;
-  height: 14rem;
-  background: radial-gradient(circle at 40% 40%, #5ec4b8 0%, #0b2c38 60%, transparent 75%);
-  opacity: 0.35;
-  animation: fun-drift-b 9s ease-in-out infinite;
-}
-
-.fun-orb-c {
-  bottom: 12%;
-  left: 38%;
-  width: 22rem;
-  height: 22rem;
-  background: radial-gradient(circle at 50% 40%, #a8ebe3 0%, #148f9a 50%, transparent 70%);
-  opacity: 0.4;
-  animation: fun-drift-c 13s ease-in-out infinite;
-}
-
-.fun-ring {
-  position: absolute;
-  border: 2px solid rgba(15, 158, 143, 0.45);
-  border-radius: 9999px;
-}
-
-.fun-ring-a {
-  top: 22%;
-  right: 18%;
-  width: 12rem;
-  height: 12rem;
-  animation: fun-spin 18s linear infinite;
-}
-
-.fun-ring-b {
-  bottom: 20%;
-  left: 14%;
-  width: 16rem;
-  height: 16rem;
-  border-color: rgba(11, 44, 56, 0.25);
-  animation: fun-spin-rev 22s linear infinite;
-}
-
-.fun-dot {
-  position: absolute;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 9999px;
-  background: #0f9e8f;
-  box-shadow: 0 0 18px rgba(15, 158, 143, 0.7);
-  animation: fun-bob 4.5s ease-in-out infinite;
-}
-
-.fun-dot-1 { top: 28%; left: 22%; animation-delay: 0s; }
-.fun-dot-2 { top: 55%; left: 70%; animation-delay: 0.6s; background: #0b2c38; }
-.fun-dot-3 { top: 18%; left: 62%; animation-delay: 1.1s; }
-.fun-dot-4 { top: 68%; left: 30%; animation-delay: 1.7s; background: #5ec4b8; }
-.fun-dot-5 { top: 40%; left: 48%; animation-delay: 0.3s; }
-.fun-dot-6 { top: 75%; left: 78%; animation-delay: 1.4s; }
-
-@keyframes fun-drift-a {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(8%, -12%) scale(1.12); }
-}
-
-@keyframes fun-drift-b {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-10%, 8%) scale(1.08); }
-}
-
-@keyframes fun-drift-c {
-  0%, 100% { transform: translate(0, 0) scale(1.05); }
-  50% { transform: translate(6%, -6%) scale(0.92); }
-}
-
-@keyframes fun-spin {
-  from { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.08); }
-  to { transform: rotate(360deg) scale(1); }
-}
-
-@keyframes fun-spin-rev {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
-}
-
-@keyframes fun-bob {
-  0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; }
-  50% { transform: translateY(-18px) scale(1.35); opacity: 1; }
+  opacity: 0.45;
+  animation: float-blob 18s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-track,
-  .aurora span,
-  .fun-orb,
-  .fun-ring,
-  .fun-dot {
+  .aurora span {
     animation: none;
   }
 
   html {
     scroll-behavior: auto;
   }
-}
-
-html.has-custom-cursor,
-html.has-custom-cursor * {
-  cursor: none !important;
 }

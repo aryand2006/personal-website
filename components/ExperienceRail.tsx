@@ -69,7 +69,7 @@ export default function ExperienceRail({
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-signal/40 to-transparent" />
           <motion.div
             style={{ scaleY: spineScale }}
-            className="absolute inset-x-0 top-0 h-full origin-top bg-signal shadow-[0_0_28px_rgba(15,158,143,0.45)]"
+            className="absolute inset-x-0 top-0 h-full origin-top bg-signal/80"
           />
         </div>
 
@@ -79,7 +79,7 @@ export default function ExperienceRail({
             return (
               <li key={`${job.org}-${job.when}`} className="relative">
                 <span
-                  className="absolute left-4 top-7 z-20 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-signal bg-white shadow-[0_0_22px_rgba(15,158,143,0.65)] sm:left-1/2"
+                  className="absolute left-4 top-7 z-20 h-2.5 w-2.5 -translate-x-1/2 rounded-full border border-signal bg-white sm:left-1/2"
                   aria-hidden
                 />
 
@@ -147,13 +147,13 @@ function TimelineCard({
   job: (typeof experience)[number];
   side: "left" | "right";
 }) {
-  const tilt = side === "left" ? -7 : 7;
+  const tilt = side === "left" ? -4 : 4;
   return (
     <motion.article
-      initial={{ opacity: 0, y: 36, rotateY: side === "left" ? 22 : -22 }}
+      initial={{ opacity: 0, y: 28, rotateY: side === "left" ? 10 : -10 }}
       whileInView={{ opacity: 1, y: 0, rotateY: tilt }}
       viewport={{ once: true, amount: 0.35 }}
-      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       style={{ transformStyle: "preserve-3d" }}
       className="glass w-full rounded-2xl p-6 sm:p-7"
     >

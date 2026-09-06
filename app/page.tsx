@@ -57,22 +57,11 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          {featured.length > 0 ? (
-            <div className="mt-14 grid gap-4 md:grid-cols-2">
-              {featured.map((repo) => (
-                <RepoCard key={repo.id} repo={repo} />
-              ))}
-            </div>
-          ) : (
-            <p className="mt-10 text-sm text-boneDim">
-              Could not load repos right now.{" "}
-              <a href={profile.github} className="text-signal" target="_blank" rel="noreferrer">
-                View on GitHub
-              </a>
-              .
-            </p>
-          )}
-
+          <div className="mt-14 grid gap-4 md:grid-cols-2">
+            {featured.map((repo) => (
+              <RepoCard key={repo.id} repo={repo} />
+            ))}
+          </div>
           <div className="mt-10 border-t border-signal/15 pt-8">
             <Link
               href="/projects"

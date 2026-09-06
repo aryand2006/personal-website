@@ -1,4 +1,4 @@
-import type { RepoSummary } from "@/lib/github";
+import type { RepoSummary } from "@/lib/github-types";
 
 type RepoCardProps = {
   repo: RepoSummary;

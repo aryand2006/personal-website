@@ -40,22 +40,11 @@ export default async function ProjectsPage() {
         </p>
       </header>
 
-      {repos.length > 0 ? (
-        <div className="mt-16 grid gap-4 md:grid-cols-2">
-          {repos.map((repo) => (
-            <RepoCard key={repo.id} repo={repo} />
-          ))}
-        </div>
-      ) : (
-        <p className="mt-16 text-sm text-boneDim">
-          Could not load repositories.{" "}
-          <a href={profile.github} className="text-signal" target="_blank" rel="noreferrer">
-            Open GitHub
-          </a>
-          .
-        </p>
-      )}
-
+      <div className="mt-16 grid gap-4 md:grid-cols-2">
+        {repos.map((repo) => (
+          <RepoCard key={repo.id} repo={repo} />
+        ))}
+      </div>
       <div className="mt-14">
         <a
           href={profile.github}

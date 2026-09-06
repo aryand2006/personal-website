@@ -199,13 +199,12 @@ export const projects: Project[] = [
 ];
 
 export const interests = [
-  "Falsifying results before trusting them",
+  "Quantitative research that survives falsification",
   "Program analysis for machine-authored code",
-  "Research governance in quantitative finance",
-  "Implementation risk in backtests",
-  "Deterministic CI gates over LLM reviewers",
-  "Degrees-of-freedom accounting in strategy search",
-  "Verification pipelines with human-in-the-loop checkpoints"
+  "Systems you can break on purpose and still trust",
+  "Hybrid retrieval and answer verification in production",
+  "Chess, climbing, and any excuse to compete",
+  "Shipping with founding teams when the brief is still forming"
 ];
 
 export const writingPosts = [
@@ -214,4 +213,82 @@ export const writingPosts = [
   "Why absolute complexity thresholds fail legacy codebases",
   "Prefix invariance as a black-box lookahead test",
   "When a Sharpe is a property of the engine, not the strategy"
+];
+
+export type Experience = {
+  org: string;
+  role: string;
+  when: string;
+  where?: string;
+  summary: string;
+  points: string[];
+  href?: string;
+};
+
+/** Drawn from LinkedIn (linkedin.com/in/aryan-daga) — human voice, real roles. */
+export const profile = {
+  headline: "CS @ CMU (ML & CompFi) · QT/QR intern @ Wincent",
+  location: "Pittsburgh · New York metro",
+  email: "aryand@andrew.cmu.edu",
+  linkedin: "https://linkedin.com/in/aryan-daga",
+  github: "https://github.com/aryand2006",
+  blurb:
+    "Hi — I'm Aryan, a CS undergrad in CMU's School of Computer Science with concentrations in Machine Learning and Computational Finance. I care about machine learning, software systems, quant, and cybersecurity — and I'm always down for a chess match or anything that gets me outside.",
+  thesis:
+    "Models and backtests produce answers. I build the instruments that decide whether those answers deserve trust."
+};
+
+export const education = {
+  school: "Carnegie Mellon University",
+  schoolShort: "CMU SCS",
+  degree: "B.S. Computer Science",
+  focus: "Concentrations in Machine Learning & Computational Finance",
+  when: "2024 — Present",
+  where: "Pittsburgh, PA"
+};
+
+export const experience: Experience[] = [
+  {
+    org: "Wincent",
+    role: "Quantitative Trader / Quantitative Researcher Intern",
+    when: "Current",
+    summary:
+      "Capital-markets internship spanning research and trading — the live edge of CompFi, not just the coursework.",
+    points: [
+      "QT/QR seat at a prop trading firm",
+      "Where research has to clear a P&L bar, not a slide deck"
+    ],
+    href: "https://www.linkedin.com/company/wincent-co"
+  },
+  {
+    org: "EY",
+    role: "AI Research Engineering Intern",
+    when: "Prior",
+    summary:
+      "Built a contextual research assistant for EY's Taxation team — hybrid retrieval, multi-source verification, structured synthesis.",
+    points: [
+      "Hybrid PDF search: semantic + BM25 over internal corpora",
+      "LLM prompt refinement with answer verification across JSON DBs and web",
+      "Designed for tax researchers who need provenance, not vibes"
+    ],
+    href: "https://www.linkedin.com/company/ernstandyoung"
+  },
+  {
+    org: "Otaru AI",
+    role: "Founding Team · Software Engineering Intern",
+    when: "Prior",
+    summary:
+      "Early-stage product work from vibe-coded prototype to something people actually use — shipping while the brief was still moving.",
+    points: [
+      "Founding-team pace: build, talk to users, iterate",
+      "Full-stack ownership when headcount is measured in single digits"
+    ]
+  }
+];
+
+export const humanBits = [
+  "Chess — always up for a match",
+  "Swimming, running, hiking, rock climbing",
+  "Badminton, table tennis, skiing, mini golf",
+  "Languages across Python, Rust, C++, Java, Swift, SML…"
 ];

@@ -104,3 +104,8 @@ a {
     scroll-behavior: auto;
   }
 }
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}

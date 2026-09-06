@@ -5,6 +5,7 @@ import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SceneMount from "@/components/three/SceneMount";
+import Cursor from "@/components/Cursor";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -31,11 +32,11 @@ export const metadata: Metadata = {
     template: "%s | Aryan Daga"
   },
   description:
-    "CS @ Carnegie Mellon. Building falsification gates for machine-authored code and quantitative research — don't trust a result you can't verify.",
+    "CS @ CMU (ML & CompFi). QT/QR intern at Wincent. Previously AI research engineering at EY and founding-team SWE at Otaru. I build instruments that falsify results before anyone trusts them.",
   openGraph: {
     title: "Aryan Daga | Verification & Program Analysis",
     description:
-      "Instruments for verification: distributed systems, crash recovery, chaos resilience, and research governance.",
+      "CMU SCS · Wincent QT/QR · EY AI Research · instruments for falsification across systems and quant.",
     url: "https://aryan-daga.vercel.app",
     siteName: "Aryan Daga",
     locale: "en_US",
@@ -43,17 +44,18 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aryan Daga | Verification & Program Analysis",
+    title: "Aryan Daga | CMU SCS · Wincent QT/QR",
     description:
       "Don't trust a result you can't verify. CS @ Carnegie Mellon."
   },
   keywords: [
     "Aryan Daga",
+    "Carnegie Mellon",
+    "Wincent",
+    "Quantitative Research",
     "Verification",
     "Program Analysis",
-    "Distributed Systems",
-    "Carnegie Mellon",
-    "Falsification"
+    "EY"
   ]
 };
 
@@ -69,8 +71,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
     >
       <body className="font-body antialiased">
         <div className="grain" aria-hidden />
+        <Cursor />
         <SceneMount className="pointer-events-none fixed inset-0 -z-10 h-full w-full" />
-        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-ink/35 to-ink/85" />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-ink/30 to-ink/88" />
         <Navbar />
         <div className="relative z-10">{children}</div>
         <Footer />

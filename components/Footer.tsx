@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { profile } from "@/components/site-content";
 
 export default function Footer() {
   return (
@@ -8,17 +9,16 @@ export default function Footer() {
           <p className="font-display text-2xl font-bold tracking-tight">
             aryan<span className="text-signal">daga</span>
           </p>
-          <p className="mt-2 max-w-sm text-sm text-boneDim">
-            Verification &amp; program analysis. Instruments you can run, not
-            decks you can screenshot.
+          <p className="mt-2 max-w-md text-sm text-boneDim">
+            {profile.headline}. Always up for a chess match.
           </p>
         </div>
         <div className="flex flex-wrap gap-6 font-mono text-[11px] uppercase tracking-[0.2em] text-boneDim">
-          <Link href="mailto:aryand@andrew.cmu.edu" className="hover:text-signal">
+          <Link href={`mailto:${profile.email}`} className="hover:text-signal">
             Email
           </Link>
           <Link
-            href="https://github.com/aryand2006"
+            href={profile.github}
             target="_blank"
             rel="noreferrer"
             className="hover:text-signal"
@@ -26,7 +26,7 @@ export default function Footer() {
             GitHub
           </Link>
           <Link
-            href="https://linkedin.com/in/aryan-daga"
+            href={profile.linkedin}
             target="_blank"
             rel="noreferrer"
             className="hover:text-signal"

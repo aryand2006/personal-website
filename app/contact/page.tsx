@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ContactForm from "@/components/ContactForm";
+import { profile } from "@/components/site-content";
 
 export const metadata: Metadata = {
   title: "Contact"
@@ -17,8 +18,8 @@ export default function ContactPage() {
           Say hello.
         </h1>
         <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
-          Open to technical collaborations, internships, and systems work where
-          falsification is part of the job.
+          Open to quant research, systems engineering, and collaborations where
+          checking the answer is part of the job. Chess challenges welcome.
         </p>
       </header>
 
@@ -27,16 +28,16 @@ export default function ContactPage() {
           <p>
             <span className="block text-[10px] text-steel">Email</span>
             <Link
-              href="mailto:aryand@andrew.cmu.edu"
+              href={`mailto:${profile.email}`}
               className="mt-2 inline-block normal-case tracking-normal text-bone transition hover:text-signal"
             >
-              aryand@andrew.cmu.edu
+              {profile.email}
             </Link>
           </p>
           <p>
             <span className="block text-[10px] text-steel">GitHub</span>
             <Link
-              href="https://github.com/aryand2006"
+              href={profile.github}
               target="_blank"
               rel="noreferrer"
               className="mt-2 inline-block normal-case tracking-normal text-bone transition hover:text-signal"
@@ -47,7 +48,7 @@ export default function ContactPage() {
           <p>
             <span className="block text-[10px] text-steel">LinkedIn</span>
             <Link
-              href="https://linkedin.com/in/aryan-daga"
+              href={profile.linkedin}
               target="_blank"
               rel="noreferrer"
               className="mt-2 inline-block normal-case tracking-normal text-bone transition hover:text-signal"

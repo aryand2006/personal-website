@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float } from "@react-three/drei";
+import { Float, Sparkles } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
@@ -10,18 +10,32 @@ type ProofSceneProps = {
   intensity?: number;
 };
 
-function useScrollProgress() {
-  const progress = useRef(0);
+function useScrollState() {
+  const scroll = useRef(0);
+  const velocity = useRef(0);
+  const last = useRef(0);
   useEffect(() => {
+    let raf = 0;
     const onScroll = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      progress.current = max > 0 ? window.scrollY / max : 0;
+      const next = max > 0 ? window.scrollY / max : 0;
+      velocity.current = next - last.current;
+      last.current = next;
+      scroll.current = next;
+    };
+    const tick = () => {
+      velocity.current *= 0.92;
+      raf = requestAnimationFrame(tick);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    raf = requestAnimationFrame(tick);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
   }, []);
-  return progress;
+  return { scroll, velocity };
 }
 
 function usePointer() {
@@ -39,27 +53,31 @@ function usePointer() {
 
 function CameraRig({
   scroll,
+  velocity,
   pointer
 }: {
   scroll: React.MutableRefObject<number>;
+  velocity: React.MutableRefObject<number>;
   pointer: React.MutableRefObject<{ x: number; y: number }>;
 }) {
   const { camera } = useThree();
   useFrame(() => {
     const t = scroll.current;
-    const targetX = pointer.current.x * 0.55;
-    const targetY = 0.35 - t * 0.9 + pointer.current.y * -0.25;
-    const targetZ = 6.2 - t * 2.4;
-    camera.position.x += (targetX - camera.position.x) * 0.05;
-    camera.position.y += (targetY - camera.position.y) * 0.05;
-    camera.position.z += (targetZ - camera.position.z) * 0.04;
-    camera.lookAt(0, 0.2 - t * 0.8, -2 - t * 4);
+    const v = Math.min(Math.abs(velocity.current) * 40, 1.2);
+    const targetX = pointer.current.x * (0.7 + v * 0.3);
+    const targetY = 0.4 - t * 1.05 + pointer.current.y * -0.35;
+    const targetZ = 6.4 - t * 2.8 - v * 0.4;
+    camera.position.x += (targetX - camera.position.x) * 0.06;
+    camera.position.y += (targetY - camera.position.y) * 0.06;
+    camera.position.z += (targetZ - camera.position.z) * 0.05;
+    camera.lookAt(0, 0.15 - t * 0.95, -2.5 - t * 5);
+    camera.rotation.z += (pointer.current.x * 0.04 - camera.rotation.z) * 0.04;
   });
   return null;
 }
 
 type BodySpec = {
-  kind: "icosa" | "torus" | "octa" | "box" | "ring";
+  kind: "icosa" | "torus" | "octa" | "box" | "ring" | "dodeca";
   position: [number, number, number];
   scale: number;
   speed: number;
@@ -69,26 +87,30 @@ type BodySpec = {
 };
 
 const BODIES: BodySpec[] = [
-  { kind: "icosa", position: [1.6, 0.4, -1], scale: 1.15, speed: 0.22, lane: 0, signal: true },
-  { kind: "torus", position: [-2.1, -0.2, -2.4], scale: 0.85, speed: 0.18, lane: 1 },
-  { kind: "octa", position: [0.2, 1.3, -3.6], scale: 0.7, speed: 0.28, lane: 2, wire: true },
-  { kind: "box", position: [-1.2, 0.9, -5.2], scale: 0.55, speed: 0.16, lane: 0 },
-  { kind: "ring", position: [2.4, -0.8, -4.1], scale: 1.1, speed: 0.2, lane: 1, signal: true },
-  { kind: "icosa", position: [-2.6, 1.1, -7], scale: 0.9, speed: 0.24, lane: 2, wire: true },
-  { kind: "torus", position: [1.1, -1.2, -8.2], scale: 0.75, speed: 0.19, lane: 0 },
-  { kind: "octa", position: [2.8, 0.6, -9.5], scale: 0.6, speed: 0.26, lane: 1, signal: true },
-  { kind: "box", position: [-0.4, 0.1, -11], scale: 0.5, speed: 0.17, lane: 2, wire: true },
-  { kind: "ring", position: [-2.2, -0.6, -12.5], scale: 1, speed: 0.21, lane: 0 },
-  { kind: "icosa", position: [0.8, 1.4, -14], scale: 1, speed: 0.23, lane: 1 },
-  { kind: "torus", position: [2.2, 0.2, -15.5], scale: 0.65, speed: 0.18, lane: 2, signal: true }
+  { kind: "icosa", position: [1.8, 0.5, -0.8], scale: 1.25, speed: 0.22, lane: 0, signal: true },
+  { kind: "torus", position: [-2.3, -0.3, -2.2], scale: 0.9, speed: 0.18, lane: 1 },
+  { kind: "octa", position: [0.3, 1.45, -3.4], scale: 0.75, speed: 0.28, lane: 2, wire: true },
+  { kind: "dodeca", position: [-1.4, 1.0, -4.8], scale: 0.7, speed: 0.15, lane: 0, signal: true },
+  { kind: "box", position: [2.6, -0.9, -3.9], scale: 0.5, speed: 0.2, lane: 1, wire: true },
+  { kind: "ring", position: [-2.8, 0.2, -6.2], scale: 1.15, speed: 0.19, lane: 2 },
+  { kind: "icosa", position: [1.2, 1.3, -7.4], scale: 0.85, speed: 0.24, lane: 0, wire: true },
+  { kind: "torus", position: [-0.6, -1.1, -8.6], scale: 0.7, speed: 0.17, lane: 1, signal: true },
+  { kind: "octa", position: [2.9, 0.7, -10], scale: 0.65, speed: 0.26, lane: 2 },
+  { kind: "box", position: [-2.0, 0.4, -11.4], scale: 0.55, speed: 0.16, lane: 0, wire: true },
+  { kind: "ring", position: [0.4, -0.5, -12.8], scale: 1.05, speed: 0.21, lane: 1, signal: true },
+  { kind: "dodeca", position: [2.1, 1.2, -14.2], scale: 0.6, speed: 0.23, lane: 2 },
+  { kind: "icosa", position: [-1.6, -0.8, -15.6], scale: 0.95, speed: 0.2, lane: 0 },
+  { kind: "torus", position: [1.5, 0.1, -17], scale: 0.6, speed: 0.18, lane: 1, wire: true }
 ];
 
 function ProofBody({
   spec,
-  scroll
+  scroll,
+  velocity
 }: {
   spec: BodySpec;
   scroll: React.MutableRefObject<number>;
+  velocity: React.MutableRefObject<number>;
 }) {
   const group = useRef<THREE.Group>(null);
   const base = useMemo(() => new THREE.Vector3(...spec.position), [spec.position]);
@@ -97,34 +119,44 @@ function ProofBody({
     if (!group.current) return;
     const t = state.clock.elapsedTime;
     const s = scroll.current;
-    // Flow toward / through camera as page scrolls
-    const flow = s * 14;
+    const v = Math.min(Math.abs(velocity.current) * 55, 1.5);
+    const flow = s * 16 + v * 0.8;
     group.current.position.set(
-      base.x + Math.sin(t * spec.speed + spec.lane) * 0.25,
-      base.y + Math.cos(t * spec.speed * 0.8 + spec.lane) * 0.2,
+      base.x + Math.sin(t * spec.speed + spec.lane) * (0.28 + v * 0.15),
+      base.y + Math.cos(t * spec.speed * 0.8 + spec.lane) * 0.22,
       base.z + flow
     );
-    group.current.rotation.x = t * spec.speed * 0.7 + spec.lane;
-    group.current.rotation.y = t * spec.speed + s * 1.2;
-    group.current.rotation.z = Math.sin(t * 0.4 + spec.lane) * 0.2;
+    group.current.rotation.x = t * spec.speed * (0.7 + v) + spec.lane;
+    group.current.rotation.y = t * spec.speed + s * 1.4;
+    group.current.rotation.z = Math.sin(t * 0.4 + spec.lane) * 0.25;
+    const pulse = 1 + Math.sin(t * 2 + spec.lane) * 0.03 + v * 0.08;
+    group.current.scale.setScalar(spec.scale * pulse);
   });
 
   const color = spec.signal ? "#e85d04" : "#ebe6dc";
   const matProps = {
     color,
-    roughness: 0.35,
-    metalness: 0.15,
+    roughness: 0.32,
+    metalness: 0.22,
     transparent: true,
-    opacity: spec.wire ? 0.55 : 0.92,
-    wireframe: !!spec.wire
+    opacity: spec.wire ? 0.5 : 0.94,
+    wireframe: !!spec.wire,
+    emissive: spec.signal ? "#e85d04" : "#000000",
+    emissiveIntensity: spec.signal ? 0.18 : 0
   };
 
   return (
-    <Float speed={1.2 + spec.lane * 0.2} rotationIntensity={0.35} floatIntensity={0.4}>
-      <group ref={group} scale={spec.scale}>
+    <Float speed={1.1 + spec.lane * 0.25} rotationIntensity={0.4} floatIntensity={0.45}>
+      <group ref={group}>
         {spec.kind === "icosa" && (
           <mesh>
             <icosahedronGeometry args={[1, 0]} />
+            <meshStandardMaterial {...matProps} />
+          </mesh>
+        )}
+        {spec.kind === "dodeca" && (
+          <mesh>
+            <dodecahedronGeometry args={[1, 0]} />
             <meshStandardMaterial {...matProps} />
           </mesh>
         )}
@@ -142,14 +174,14 @@ function ProofBody({
         )}
         {spec.kind === "torus" && (
           <mesh>
-            <torusKnotGeometry args={[0.55, 0.18, 128, 16]} />
-            <meshStandardMaterial {...matProps} metalness={0.4} roughness={0.25} />
+            <torusKnotGeometry args={[0.55, 0.18, 140, 18]} />
+            <meshStandardMaterial {...matProps} metalness={0.45} roughness={0.22} />
           </mesh>
         )}
         {spec.kind === "ring" && (
           <mesh rotation={[Math.PI / 2.4, 0.3, 0]}>
-            <torusGeometry args={[0.9, 0.08, 16, 64]} />
-            <meshStandardMaterial {...matProps} metalness={0.5} roughness={0.2} />
+            <torusGeometry args={[0.95, 0.07, 18, 72]} />
+            <meshStandardMaterial {...matProps} metalness={0.55} roughness={0.18} />
           </mesh>
         )}
       </group>
@@ -157,41 +189,143 @@ function ProofBody({
   );
 }
 
-function GlassOrb({ scroll }: { scroll: React.MutableRefObject<number> }) {
+function Ribbon({
+  scroll,
+  index
+}: {
+  scroll: React.MutableRefObject<number>;
+  index: number;
+}) {
+  const ref = useRef<THREE.Mesh>(null);
+  const curve = useMemo(() => {
+    const pts = [];
+    for (let i = 0; i < 40; i++) {
+      const z = -i * 0.55;
+      pts.push(
+        new THREE.Vector3(
+          Math.sin(i * 0.35 + index) * (1.6 + index * 0.4),
+          Math.cos(i * 0.28 + index * 1.2) * 0.8,
+          z
+        )
+      );
+    }
+    return new THREE.CatmullRomCurve3(pts);
+  }, [index]);
+
+  const geom = useMemo(() => {
+    return new THREE.TubeGeometry(curve, 120, 0.025, 8, false);
+  }, [curve]);
+
+  useFrame((state) => {
+    if (!ref.current) return;
+    const s = scroll.current;
+    ref.current.position.z = s * 10;
+    ref.current.rotation.z = state.clock.elapsedTime * 0.05 * (index % 2 === 0 ? 1 : -1);
+  });
+
+  return (
+    <mesh ref={ref} geometry={geom}>
+      <meshStandardMaterial
+        color={index % 2 === 0 ? "#e85d04" : "#ebe6dc"}
+        transparent
+        opacity={0.35}
+        roughness={0.4}
+        metalness={0.3}
+        emissive={index % 2 === 0 ? "#e85d04" : "#ebe6dc"}
+        emissiveIntensity={0.12}
+      />
+    </mesh>
+  );
+}
+
+function DustField({ scroll }: { scroll: React.MutableRefObject<number> }) {
+  const ref = useRef<THREE.Points>(null);
+  const positions = useMemo(() => {
+    const n = 900;
+    const arr = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) {
+      arr[i * 3] = (Math.random() - 0.5) * 14;
+      arr[i * 3 + 1] = (Math.random() - 0.5) * 8;
+      arr[i * 3 + 2] = -Math.random() * 22;
+    }
+    return arr;
+  }, []);
+
+  useFrame((state) => {
+    if (!ref.current) return;
+    ref.current.rotation.y = state.clock.elapsedTime * 0.02;
+    ref.current.position.z = scroll.current * 8;
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={positions.length / 3}
+          array={positions}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.025}
+        color="#ebe6dc"
+        transparent
+        opacity={0.45}
+        sizeAttenuation
+        depthWrite={false}
+      />
+    </points>
+  );
+}
+
+function GlassOrb({
+  scroll,
+  velocity
+}: {
+  scroll: React.MutableRefObject<number>;
+  velocity: React.MutableRefObject<number>;
+}) {
   const ref = useRef<THREE.Mesh>(null);
   useFrame((state) => {
     if (!ref.current) return;
     const t = state.clock.elapsedTime;
     const s = scroll.current;
+    const v = Math.min(Math.abs(velocity.current) * 40, 1);
     ref.current.position.set(
-      -0.2 + Math.sin(t * 0.25) * 0.15,
-      0.15 + Math.cos(t * 0.2) * 0.1,
-      -1.5 + s * 4
+      -0.15 + Math.sin(t * 0.25) * 0.2,
+      0.2 + Math.cos(t * 0.2) * 0.12,
+      -1.2 + s * 4.5
     );
-    ref.current.rotation.y = t * 0.15;
+    ref.current.rotation.y = t * 0.18;
+    ref.current.rotation.x = t * 0.08;
+    const scale = 1.4 + Math.sin(t * 0.7) * 0.05 + v * 0.12;
+    ref.current.scale.setScalar(scale);
   });
 
   return (
-    <mesh ref={ref} scale={1.35}>
-      <sphereGeometry args={[1, 48, 48]} />
+    <mesh ref={ref}>
+      <sphereGeometry args={[1, 64, 64]} />
       <meshPhysicalMaterial
         color="#ebe6dc"
-        transmission={0.86}
-        thickness={0.7}
-        roughness={0.12}
-        metalness={0.05}
-        ior={1.4}
+        transmission={0.9}
+        thickness={0.85}
+        roughness={0.08}
+        metalness={0.02}
+        ior={1.45}
         transparent
         opacity={1}
         attenuationColor="#e85d04"
-        attenuationDistance={3}
+        attenuationDistance={2.2}
+        clearcoat={0.4}
+        clearcoatRoughness={0.2}
       />
     </mesh>
   );
 }
 
 function SceneContents() {
-  const scroll = useScrollProgress();
+  const { scroll, velocity } = useScrollState();
   const pointer = usePointer();
   const reduced = useMemo(() => {
     if (typeof window === "undefined") return false;
@@ -199,38 +333,51 @@ function SceneContents() {
   }, []);
   const bodies = useMemo(() => {
     if (typeof window === "undefined") return BODIES;
-    return window.innerWidth < 768 ? BODIES.slice(0, 7) : BODIES;
+    return window.innerWidth < 768 ? BODIES.slice(0, 8) : BODIES;
   }, []);
 
   return (
     <>
       <color attach="background" args={["#0c0c0a"]} />
-      <fog attach="fog" args={["#0c0c0a", 7, 24]} />
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[4, 6, 3]} intensity={1.25} color="#fff4e8" />
-      <directionalLight position={[-5, -2, -4]} intensity={0.7} color="#e85d04" />
-      <pointLight position={[0, 2, 2]} intensity={0.55} color="#ebe6dc" />
+      <fog attach="fog" args={["#0c0c0a", 6.5, 26]} />
+      <ambientLight intensity={0.42} />
+      <directionalLight position={[5, 7, 3]} intensity={1.35} color="#fff1e0" />
+      <directionalLight position={[-6, -2, -5]} intensity={0.85} color="#e85d04" />
+      <pointLight position={[2, 3, 1]} intensity={0.7} color="#ebe6dc" />
+      <pointLight position={[-3, -1, -2]} intensity={0.45} color="#e85d04" />
 
-      {!reduced && <GlassOrb scroll={scroll} />}
+      {!reduced && (
+        <>
+          <GlassOrb scroll={scroll} velocity={velocity} />
+          <DustField scroll={scroll} />
+          <Ribbon scroll={scroll} index={0} />
+          <Ribbon scroll={scroll} index={1} />
+          <Ribbon scroll={scroll} index={2} />
+          <Sparkles
+            count={40}
+            scale={[10, 6, 16]}
+            size={2.5}
+            speed={0.35}
+            opacity={0.35}
+            color="#e85d04"
+          />
+        </>
+      )}
       {bodies.map((spec, i) => (
-        <ProofBody key={i} spec={spec} scroll={scroll} />
+        <ProofBody key={i} spec={spec} scroll={scroll} velocity={velocity} />
       ))}
-      <CameraRig scroll={scroll} pointer={pointer} />
+      <CameraRig scroll={scroll} velocity={velocity} pointer={pointer} />
     </>
   );
 }
 
 export default function ProofScene({ className, intensity = 1 }: ProofSceneProps) {
   return (
-    <div
-      className={className}
-      style={{ opacity: intensity }}
-      aria-hidden
-    >
+    <div className={className} style={{ opacity: intensity }} aria-hidden>
       <Canvas
-        dpr={[1, 1.6]}
+        dpr={[1, 1.75]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-        camera={{ position: [0, 0.3, 6.2], fov: 42, near: 0.1, far: 40 }}
+        camera={{ position: [0, 0.35, 6.4], fov: 40, near: 0.1, far: 45 }}
         style={{ width: "100%", height: "100%" }}
       >
         <Suspense fallback={null}>

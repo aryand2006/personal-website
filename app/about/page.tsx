@@ -5,18 +5,18 @@ export const metadata: Metadata = {
 };
 
 const coreInterests = [
-  "Multimodal memory pipelines",
-  "Retrieval + reranking systems",
-  "Agent orchestration",
-  "Infrastructure for AI-native products",
-  "Startup building"
+  "Program analysis and structural gates for agent-authored code",
+  "Research governance for quantitative strategies",
+  "Falsification tooling for backtests",
+  "Verification pipelines with human checkpoints",
+  "Computational finance methodology"
 ];
 
 const enjoyList = [
-  "Hackathons",
-  "System design",
+  "Hard methodological problems",
+  "Deterministic tooling over vibes",
   "Technical deep dives",
-  "Working on hard problems with strong teams"
+  "Building instruments other people can run"
 ];
 
 export default function AboutPage() {
@@ -25,14 +25,15 @@ export default function AboutPage() {
       <header className="space-y-3">
         <p className="text-xs uppercase tracking-[0.22em] text-primaryAccent">About</p>
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Building Systems That Think and Execute
+          Don&apos;t Trust a Result You Can&apos;t Verify
         </h1>
       </header>
 
       <section className="rounded-2xl border border-slate-700/60 bg-card/65 p-6 leading-8 text-slate-200 sm:p-8 sm:text-lg">
-        I&apos;m a Computer Science student at Carnegie Mellon focused on
-        building intelligent systems that combine perception, reasoning, and
-        action.
+        I&apos;m a Computer Science student at Carnegie Mellon working on
+        program analysis and verification — the part of the stack that decides
+        whether code or a backtest is actually correct, not just whether it
+        runs or plots well.
       </section>
 
       <section className="grid gap-6 sm:grid-cols-2">

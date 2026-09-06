@@ -24,7 +24,20 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           <p className="text-xs uppercase tracking-[0.18em] text-primaryAccent/90">
             {project.subtitle}
           </p>
-          <h3 className="mt-2 text-2xl font-semibold tracking-tight">{project.title}</h3>
+          <h3 className="mt-2 text-2xl font-semibold tracking-tight">
+            {project.href ? (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noreferrer"
+                className="transition hover:text-primaryAccent"
+              >
+                {project.title}
+              </a>
+            ) : (
+              project.title
+            )}
+          </h3>
         </header>
         <p className="text-sm leading-7 text-mutedText sm:text-base">
           {project.description}

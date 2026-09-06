@@ -5,6 +5,7 @@ export type Project = {
   highlights: string[];
   technologies: string[];
   focus?: string;
+  href?: string;
 };
 
 export const navLinks = [
@@ -17,106 +18,118 @@ export const navLinks = [
 ];
 
 export const heroTags = [
-  "AI Systems Engineer",
-  "Multimodal Infrastructure",
-  "Agent Architectures",
-  "RAG + Retrieval Systems",
-  "Quantitative Modeling",
-  "Full-Stack AI"
+  "Verification",
+  "Program Analysis",
+  "Computational Finance",
+  "Research Governance",
+  "Falsification Gates",
+  "CS @ CMU"
 ];
 
 export const projects: Project[] = [
   {
-    title: "Jarvis",
-    subtitle: "Real-Time Multimodal Interaction Engine",
+    title: "affidavit",
+    subtitle: "Research-Governance Gate for Strategy Results",
     description:
-      "Built a real-time AR interaction system using MediaPipe + OpenCV + a custom 3D rendering pipeline for gesture-based 2D/3D object manipulation, with Gemini Live API-driven scene reasoning.",
+      "One-command deployability gate that swears whether a backtest survives falsification: selection reconstitution, degrees-of-freedom accounting, cost tilt, placebo nulls, track-record tests, and a black-box lookahead probe — then writes a hash-chained JSON artifact.",
     highlights: [
-      "Custom 3D rendering engine with projection, lighting, and transformation matrices",
-      "OBJ parser with normalization and wireframe fallback mode",
-      "Hand landmark gesture recognition with disambiguation logic",
-      "Lightweight orchestration layer for scene-aware reasoning",
-      "Hybrid perception + reasoning loop optimized for responsiveness",
-      "Frame smoothing for high-fidelity real-time interaction"
+      "Ex-ante portfolio reconstitution denominated in money, not p-values",
+      "Explicit degrees-of-freedom ledger → noise-floor Sharpe for the search",
+      "Cost-tilt break-even and sensitivity to the cost-model assumption",
+      "Shuffle and AR(1)-matched placebo batteries",
+      "Prefix-invariance leak probe against decision functions you did not write",
+      "Sworn only when every applicable check passes; skips never guess"
     ],
-    technologies: ["Python", "OpenCV", "MediaPipe", "3D Math", "VLM APIs"]
+    technologies: ["Python", "NumPy", "CLI", "Research Governance"],
+    focus: "Don't trust a result you can't verify.",
+    href: "https://github.com/aryand2006/affidavit"
   },
   {
-    title: "Domain-Specific Research Agent",
-    subtitle: "Enterprise Taxation",
+    title: "sediment",
+    subtitle: "Structural-Erosion Gate for Machine-Authored Code",
     description:
-      "Built a multi-step reasoning agent that combines hybrid retrieval and contextual reasoning to synthesize trustworthy answers from structured and unstructured enterprise data.",
+      "Deterministic CI gate that scores the structural debt a change adds — complexity, nesting, duplication, error-masking — attributes it to the diff, and fails on erosion. Built for coding agents that pass tests and still make a codebase worse.",
     highlights: [
-      "Architecture: Retrieve -> Re-rank -> Reason -> Verify",
-      "Hybrid retrieval layer with sparse + dense search strategies",
-      "Azure-based document parsing with domain-aware preprocessing",
-      "Custom reranking layer and structured output enforcement",
-      "Traceable reasoning pipeline with explicit confidence signaling",
-      "Explainability interfaces for enterprise trust and compliance"
+      "Diff-attributed structural metrics, not absolute legacy thresholds",
+      "Identifier-blind AST fingerprinting for copy-paste the text diff misses",
+      "Zero runtime dependencies by design",
+      "Gates itself in its own CI"
     ],
-    technologies: [
-      "Python",
-      "Azure AI",
-      "Hybrid Retrieval",
-      "Reranking",
-      "Reasoning Pipelines"
+    technologies: ["Python", "AST", "CI", "Static Analysis"],
+    focus: "Confirm agent-authored code did not erode structure.",
+    href: "https://github.com/aryand2006/sediment"
+  },
+  {
+    title: "parallax",
+    subtitle: "Implementation Sensitivity in Backtests",
+    description:
+      "Measures how much a backtest result depends on implementation choices rather than on the strategy — fill timing, cost basis, slippage, share rounding — across a controlled engine sweep.",
+    highlights: [
+      "144 execution-decision combinations on one auditable engine",
+      "Attribution of result spread to the responsible decision",
+      "Implementation risk scales monotonically with turnover",
+      "Same strategy can report Sharpe 0.54 or 2.18 at 10bp"
     ],
-    focus:
-      "Explainability, grounding, and reliability in high-stakes environments."
+    technologies: ["Python", "NumPy", "Backtesting", "Reproducibility"],
+    href: "https://github.com/aryand2006/parallax"
+  },
+  {
+    title: "assay",
+    subtitle: "Selection-Bias Gate for Strategy Search",
+    description:
+      "Tests whether a backtest result survives the search that found it. Puts the losers back: you tested N and kept K — what would running all N have returned?",
+    highlights: [
+      "Money-denominated ex-ante reconstitution",
+      "Deflated Sharpe, MinTRL, and PBO/CSCV",
+      "Noise-floor Sharpe from search size and sample length",
+      "Caught a live deployment candidate: 10.7%/yr → 1.7%/yr ex ante"
+    ],
+    technologies: ["Python", "NumPy", "Statistics"],
+    href: "https://github.com/aryand2006/assay"
+  },
+  {
+    title: "clairvoyant",
+    subtitle: "Differential Lookahead Detection",
+    description:
+      "Black-box test for strategies that can see the future: run the decision twice at the same date, once with the future hidden. Binary-searches how far forward a leak reaches.",
+    highlights: [
+      "Prefix-invariance without instrumenting the strategy",
+      "Horizon search separates off-by-one shifts from full-sample stats",
+      "Works against code you did not write"
+    ],
+    technologies: ["Python", "NumPy", "Pandas"],
+    href: "https://github.com/aryand2006/clairvoyant"
   },
   {
     title: "ShadowStack",
     subtitle: "Verified Language Modernization Engine",
     description:
-      "Built an enterprise-grade modernization platform for safe legacy-to-modern code transformations with multi-layer verification and human-in-the-loop controls.",
+      "Enterprise-grade platform for provably safe code modernization with multi-layer verification, human-in-the-loop workflows, and migration intelligence on Eclipse JDT.",
     highlights: [
-      "Rule-driven transformation pipeline for structured code evolution",
-      "Verification stack with static checks, confidence scoring, and audit traces",
-      "Human approval checkpoints for safety in critical code paths",
-      "Migration intelligence layer to reduce regressions during modernization",
-      "Operational workflows designed for enterprise compliance and reliability",
-      "Architecture optimized for iterative large-scale migrations"
+      "Call-graph and data-flow analysis with full type resolution",
+      "Purity and mutation classification",
+      "7-layer verification before human approval",
+      "Adapters for Java, COBOL, and Python 2→3"
     ],
-    technologies: [
-      "TypeScript",
-      "Node.js",
-      "Static Analysis",
-      "Verification Pipelines",
-      "Enterprise Workflows"
-    ],
-    focus: "Provably safer modernization with practical developer velocity."
-  },
-  {
-    title: "Dinect",
-    subtitle: "Cloud-Native Restaurant OS",
-    description:
-      "Developed a production-ready restaurant operating platform with QR ordering, kitchen orchestration, and analytics across customer and operator workflows.",
-    highlights: [
-      "End-to-end architecture spanning customer ordering to kitchen execution",
-      "Real-time order status flow and operational event handling",
-      "Data model for menu management, fulfillment, and restaurant analytics",
-      "Built for reliability under concurrent usage in time-sensitive environments",
-      "Clear separation between product surfaces and backend domain logic"
-    ],
-    technologies: ["Next.js", "Fastify", "Prisma", "PostgreSQL", "Cloud APIs"],
-    focus: "Execution speed and operational reliability for real-world workflows."
+    technologies: ["Java", "Eclipse JDT", "TypeScript", "Static Analysis"],
+    href: "https://github.com/aryand2006/ShadowStack"
   }
 ];
 
 export const interests = [
-  "Agentic workflows in enterprise software",
-  "Multimodal memory systems",
-  "Retrieval architectures at scale",
-  "Explainability in AI systems",
-  "Human-in-the-loop design",
-  "Performance optimization for real-time systems",
-  "Startup building and 0->1 product execution"
+  "Falsifying results before trusting them",
+  "Program analysis for machine-authored code",
+  "Research governance in quantitative finance",
+  "Implementation risk in backtests",
+  "Deterministic CI gates over LLM reviewers",
+  "Degrees-of-freedom accounting in strategy search",
+  "Verification pipelines with human-in-the-loop checkpoints"
 ];
 
 export const writingPosts = [
-  "Designing Enterprise-Grade Retrieval Pipelines",
-  "Sparse vs Dense Retrieval Tradeoffs",
-  "Building Explainable Agents",
-  "Memory Architectures for AI Systems",
-  "Lessons from Hackathons"
+  "Spread tilt governs cost-model sensitivity in portfolio backtests",
+  "What an ex-ante portfolio reconstitution actually changes",
+  "Why absolute complexity thresholds fail legacy codebases",
+  "Prefix invariance as a black-box lookahead test",
+  "When a Sharpe is a property of the engine, not the strategy"
 ];

@@ -46,15 +46,15 @@ export default function Hero() {
           <span className="text-primaryAccent">DAGA</span>
         </h1>
         <p className="mt-5 text-lg font-medium text-slate-300">
-          AI Systems Builder.
+          Verification &amp; program analysis.
           <br />
           Computer Science @ Carnegie Mellon.
         </p>
         <p className="mt-6 max-w-xl text-sm leading-7 text-mutedText sm:text-base">
-          I build intelligent systems that reason, retrieve, and act - from
-          domain-specific agents to multimodal memory architectures. I care
-          about performance, architecture, and shipping real systems that work
-          in production.
+          I build gates that decide whether a result is actually correct — for
+          machine-authored code and for quantitative backtests. Models can
+          produce answers; I work on the tooling that falsifies them before
+          anyone ships.
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3">

@@ -13,11 +13,12 @@ export default function HomePage() {
             Work & Projects
           </p>
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Systems Built for Production Reliability
+            Instruments for Verification
           </h2>
           <p className="max-w-3xl text-sm leading-7 text-mutedText sm:text-base">
-            Focused on intelligence infrastructure where performance, traceability,
-            and architecture quality matter as much as model capability.
+            Gates and diagnostics for machine-authored code and quantitative
+            research — each one answers a question that has to be answered
+            before anyone should trust the result.
           </p>
         </div>
         <div className="grid gap-6">

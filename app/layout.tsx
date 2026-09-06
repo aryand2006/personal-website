@@ -5,6 +5,7 @@ import { Syne, Public_Sans, IBM_Plex_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import FunBackdrop from "@/components/FunBackdrop";
 import SceneMount from "@/components/three/SceneMount";
 
 const Cursor = dynamic(() => import("@/components/Cursor"), { ssr: false });
@@ -85,7 +86,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
             style={{ animationDelay: "4s" }}
           />
         </div>
-        <SceneMount className="scene-root pointer-events-none fixed inset-0 z-0" />
+        <FunBackdrop />
+        <SceneMount className="scene-root pointer-events-none fixed inset-0 z-[1]" />
         <div className="grain" aria-hidden />
         <Cursor />
         <Navbar />

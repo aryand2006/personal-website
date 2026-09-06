@@ -36,7 +36,7 @@ export default async function ProjectsPage() {
         ))}
       </div>
 
-      <section className="mt-24 border-t border-bone/10 pt-16">
+      <section className="mt-24 border-t border-signal/15 pt-16">
         <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
           GitHub
         </p>

@@ -16,9 +16,10 @@ export default function Spotlight() {
   return (
     <section
       ref={ref}
-      className="relative my-8 flex min-h-[70vh] items-center overflow-hidden border-y border-bone/10 py-24"
+      className="relative my-8 flex min-h-[70vh] items-center overflow-hidden border-y border-signal/15 py-24"
     >
-      <motion.div style={{ x, opacity, scale }} className="relative z-10 w-full px-5 sm:px-8">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-transparent to-ink/80" />
+      <motion.div style={{ x, opacity, scale }} className="relative z-10 mx-auto w-full max-w-6xl px-5 sm:px-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-signal">
           How I show up
         </p>
@@ -31,9 +32,8 @@ export default function Spotlight() {
           can&apos;t be checked.
         </h2>
         <p className="mt-8 max-w-xl text-base leading-relaxed text-boneDim sm:text-lg">
-          On LinkedIn I lead with CMU, Wincent, and a standing invite to chess.
-          Online here I lead with the instruments — same person, different
-          altitude.
+          Live markets at Wincent, research agents at EY, founding-team product at
+          Otaru — same instinct: ship it, then try to break it.
         </p>
       </motion.div>
     </section>

@@ -7,7 +7,7 @@ import { humanBits, interests, projects } from "@/components/site-content";
 import Link from "next/link";
 
 export default function HomePage() {
-  const featured = projects.slice(0, 5);
+  const featured = projects.slice(0, 6);
 
   return (
     <>
@@ -27,14 +27,14 @@ export default function HomePage() {
         <section className="py-24 sm:py-32" id="work">
           <div className="max-w-2xl">
             <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
-              Selected instruments
+              Selected work
             </p>
             <h2 className="font-display mt-4 text-4xl font-bold tracking-tight text-bone sm:text-5xl">
-              Built to falsify.
+              Built to ship — and to check.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
-              Public systems work with the same habit as the internships —
-              plant the failure mode, then refuse to ship if the check fails.
+              Live trading systems, award-winning hackathon builds, and public
+              verification instruments across consensus, logs, storage, and chaos.
             </p>
           </div>
 
@@ -44,7 +44,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-10 border-t border-bone/10 pt-8">
+          <div className="mt-10 border-t border-signal/15 pt-8">
             <Link
               href="/work"
               className="font-mono text-[11px] uppercase tracking-[0.22em] text-boneDim transition hover:text-signal"
@@ -55,7 +55,7 @@ export default function HomePage() {
         </section>
 
         <section className="pb-28 sm:pb-36">
-          <div className="grid gap-16 border-t border-bone/10 pt-16 lg:grid-cols-2">
+          <div className="grid gap-16 border-t border-signal/15 pt-16 lg:grid-cols-2">
             <div>
               <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
                 Working thesis
@@ -69,7 +69,7 @@ export default function HomePage() {
                 {interests.map((item) => (
                   <li
                     key={item}
-                    className="border-b border-bone/10 py-4 text-sm leading-relaxed text-boneDim first:border-t first:border-bone/10"
+                    className="border-b border-signal/15 py-4 text-sm leading-relaxed text-boneDim first:border-t first:border-signal/15"
                   >
                     {item}
                   </li>
@@ -87,7 +87,7 @@ export default function HomePage() {
                 {humanBits.map((item) => (
                   <li
                     key={item}
-                    className="border-b border-bone/10 py-4 text-sm leading-relaxed text-boneDim first:border-t first:border-bone/10"
+                    className="border-b border-signal/15 py-4 text-sm leading-relaxed text-boneDim first:border-t first:border-signal/15"
                   >
                     {item}
                   </li>

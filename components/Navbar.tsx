@@ -23,8 +23,8 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-ink/80 backdrop-blur-md" : "bg-transparent"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? "glass border-b border-signal/10" : "bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
@@ -52,7 +52,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           <Link
             href="/contact"
-            className="hidden border border-bone/25 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-bone transition hover:border-signal hover:text-signal sm:inline-flex"
+            className="glass hidden px-3 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-bone transition hover:border-signal/50 hover:text-signal sm:inline-flex"
           >
             Contact
           </Link>
@@ -69,7 +69,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="border-t border-bone/10 bg-ink/95 px-5 py-6 backdrop-blur-md md:hidden">
+        <div className="glass border-t border-signal/10 px-5 py-6 md:hidden">
           <div className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link

@@ -32,11 +32,11 @@ export const metadata: Metadata = {
     template: "%s | Aryan Daga"
   },
   description:
-    "CS @ CMU (ML & CompFi). QT/QR intern at Wincent. Previously AI research engineering at EY and founding-team SWE at Otaru. I build instruments that falsify results before anyone trusts them.",
+    "CS @ CMU (ML & CompFi), GPA 3.89. QT/QR intern at Wincent — live crypto strategies. Previously AI research engineering at EY and founding-team SWE at Otaru AI.",
   openGraph: {
-    title: "Aryan Daga | Verification & Program Analysis",
+    title: "Aryan Daga | CMU SCS · Wincent QT/QR",
     description:
-      "CMU SCS · Wincent QT/QR · EY AI Research · instruments for falsification across systems and quant.",
+      "Quant research, AI systems, and founding-team engineering. Carnegie Mellon SCS.",
     url: "https://aryan-daga.vercel.app",
     siteName: "Aryan Daga",
     locale: "en_US",
@@ -45,17 +45,15 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Aryan Daga | CMU SCS · Wincent QT/QR",
-    description:
-      "Don't trust a result you can't verify. CS @ Carnegie Mellon."
+    description: "CS @ Carnegie Mellon. Quant, systems, and instruments you can falsify."
   },
   keywords: [
     "Aryan Daga",
     "Carnegie Mellon",
     "Wincent",
     "Quantitative Research",
-    "Verification",
-    "Program Analysis",
-    "EY"
+    "EY",
+    "Otaru AI"
   ]
 };
 
@@ -73,7 +71,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <div className="grain" aria-hidden />
         <Cursor />
         <SceneMount className="pointer-events-none fixed inset-0 -z-10 h-full w-full" />
-        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-ink/30 to-ink/88" />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-ink/25 to-ink/80" />
         <Navbar />
         <div className="relative z-10">{children}</div>
         <Footer />

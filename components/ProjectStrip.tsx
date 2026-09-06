@@ -19,7 +19,7 @@ export default function ProjectStrip({ project, index }: ProjectStripProps) {
         delay: Math.min(index * 0.04, 0.24),
         ease: [0.22, 1, 0.36, 1]
       }}
-      className="group border-t border-bone/10 py-10 first:border-t-0 sm:py-12"
+      className="group border-t border-signal/15 py-10 first:border-t-0 sm:py-12"
     >
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] lg:gap-16">
         <div>

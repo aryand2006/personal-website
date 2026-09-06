@@ -10,7 +10,7 @@ export default function RepoCard({ repo }: RepoCardProps) {
   const updatedAt = new Date(repo.updatedAt).toLocaleDateString();
 
   return (
-    <article className="border border-bone/10 p-5 transition hover:border-signal/50">
+    <article className="border border-signal/15 p-5 transition hover:border-signal/50">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h3 className="font-display text-xl font-bold tracking-tight">{repo.name}</h3>
         <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel">

@@ -11,13 +11,12 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5 border-t border-bone/10 pt-8">
+    <form onSubmit={onSubmit} className="glass space-y-5 rounded-2xl p-6 sm:p-8">
       <p className="font-display text-2xl font-bold tracking-tight">
         Start a conversation
       </p>
       <p className="text-sm leading-relaxed text-boneDim">
-        What you&apos;re building, what has to be true, and where verification
-        matters.
+        Quant, systems, founding-team work — or a chess challenge.
       </p>
 
       <label className="block space-y-2">
@@ -27,7 +26,7 @@ export default function ContactForm() {
         <input
           required
           type="text"
-          className="w-full border border-bone/15 bg-ink2/80 px-4 py-3 text-sm text-bone outline-none transition focus:border-signal"
+          className="w-full rounded-lg border border-signal/20 bg-ink/40 px-4 py-3 text-sm text-bone outline-none transition focus:border-signal"
         />
       </label>
       <label className="block space-y-2">
@@ -37,7 +36,7 @@ export default function ContactForm() {
         <input
           required
           type="email"
-          className="w-full border border-bone/15 bg-ink2/80 px-4 py-3 text-sm text-bone outline-none transition focus:border-signal"
+          className="w-full rounded-lg border border-signal/20 bg-ink/40 px-4 py-3 text-sm text-bone outline-none transition focus:border-signal"
         />
       </label>
       <label className="block space-y-2">
@@ -47,20 +46,20 @@ export default function ContactForm() {
         <textarea
           required
           rows={5}
-          className="w-full border border-bone/15 bg-ink2/80 px-4 py-3 text-sm text-bone outline-none transition focus:border-signal"
+          className="w-full rounded-lg border border-signal/20 bg-ink/40 px-4 py-3 text-sm text-bone outline-none transition focus:border-signal"
         />
       </label>
 
       <button
         type="submit"
-        className="bg-signal px-6 py-3 font-display text-sm font-semibold tracking-wide text-ink transition hover:brightness-110"
+        className="rounded-lg bg-signal px-6 py-3 font-display text-sm font-semibold tracking-wide text-ink transition hover:brightness-110"
       >
         Send message
       </button>
 
       {submitted && (
         <p className="text-sm text-boneDim">
-          Queued. For a faster reply:{" "}
+          Queued. Faster reply:{" "}
           <a href="mailto:aryand@andrew.cmu.edu" className="text-signal">
             aryand@andrew.cmu.edu
           </a>

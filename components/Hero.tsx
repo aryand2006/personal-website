@@ -26,6 +26,8 @@ export default function Hero() {
           <span>ML &amp; CompFi</span>
           <span className="text-signal">/</span>
           <span>QT/QR @ Wincent</span>
+          <span className="text-signal">/</span>
+          <span>GPA {education.gpa.split(" ")[0]}</span>
         </div>
 
         <h1 className="font-display mt-7 text-[clamp(3.6rem,13vw,9rem)] font-bold leading-[0.84] tracking-tightest text-bone">
@@ -43,17 +45,17 @@ export default function Hero() {
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
           <Link
-            href="/work"
+            href="/#experience"
             data-cursor
-            className="inline-flex items-center bg-signal px-6 py-3.5 font-display text-sm font-semibold tracking-wide text-ink transition hover:brightness-110"
+            className="inline-flex items-center rounded-lg bg-signal px-6 py-3.5 font-display text-sm font-semibold tracking-wide text-ink transition hover:brightness-110"
           >
-            See the instruments
+            See experience
           </Link>
           <Link
-            href="/about"
-            className="font-mono text-xs uppercase tracking-[0.22em] text-boneDim transition hover:text-bone"
+            href="/work"
+            className="glass rounded-lg px-5 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-bone transition hover:text-signal"
           >
-            About me
+            Projects
           </Link>
           <Link
             href={profile.github}
@@ -72,7 +74,7 @@ export default function Hero() {
       >
         scroll —
         <br />
-        geometry accelerates with you
+        aqua geometry moves with you
       </motion.div>
     </section>
   );

@@ -17,8 +17,8 @@ export default function WorkPage() {
           The catalog.
         </h1>
         <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
-          Verification instruments across consensus, logs, storage, metrics,
-          chaos, and research governance.
+          Trading systems, hackathon wins, and public verification instruments —
+          everything from the resume plus the repos built to be broken.
         </p>
       </header>
       <div className="mt-16">

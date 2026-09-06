@@ -29,6 +29,23 @@ export const heroTags = [
 export const projects: Project[] = [
 
   {
+    title: "scroll",
+    subtitle: "Fault-Verified Partitioned Commit Log",
+    description:
+      "Amazon-shaped durable log with consumer groups. Deterministic campaigns drop produces and crash brokers; executable checks enforce at-least-once delivery and per-partition order after heal.",
+    highlights: [
+      "Append-only partitions with snapshot/restore durability",
+      "Consumer-group assignment with fencing epochs",
+      "Seeded fault injection: drop, crash, restart",
+      "At-least-once + per-partition order property suite",
+      "Pairs with concord (Raft) as the log under the consensus layer"
+    ],
+    technologies: ["Go", "Commit Log", "Consumer Groups", "Deterministic Simulation"],
+    focus: "Delivery guarantees you can falsify.",
+    href: "https://github.com/aryand2006/scroll"
+  },
+
+  {
     title: "concord",
     subtitle: "Deterministically Verified Raft KV",
     description:

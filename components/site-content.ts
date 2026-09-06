@@ -29,6 +29,22 @@ export const heroTags = [
 export const projects: Project[] = [
 
   {
+    title: "aperture",
+    subtitle: "Metrics Pipeline with Proven Anomaly Recall",
+    description:
+      "Meta-shaped observability path: ingest → tumbling windows → spike/drop/flatline/gap detectors. A seeded simulator plants ground-truth anomalies and fails the build on missed recall or clean-baseline false positives.",
+    highlights: [
+      "Tumbling aggregates with rolling mean/std for z-score detectors",
+      "Spike, drop, flatline, and gap detectors with dedup",
+      "Planted-anomaly campaigns with executable recall checks",
+      "Clean baseline must stay quiet; same seed ⇒ identical trace hash"
+    ],
+    technologies: ["Go", "Metrics", "Anomaly Detection", "Deterministic Simulation"],
+    focus: "Detectors you can falsify, not dashboards you can screenshot.",
+    href: "https://github.com/aryand2006/aperture"
+  },
+
+  {
     title: "stratum",
     subtitle: "LSM Engine with Proven Crash Recovery",
     description:

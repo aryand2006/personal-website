@@ -22,21 +22,8 @@ export default function SceneMount({
     const boot = () => {
       if (!cancelled) setReady(true);
     };
-
-    const w = window as Window & {
-      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
-      cancelIdleCallback?: (id: number) => void;
-    };
-
-    if (typeof w.requestIdleCallback === "function") {
-      const id = w.requestIdleCallback(boot, { timeout: 400 });
-      return () => {
-        cancelled = true;
-        w.cancelIdleCallback?.(id);
-      };
-    }
-
-    const t = window.setTimeout(boot, 120);
+    // Short delay so first paint stays snappy, then WebGL kicks in
+    const t = window.setTimeout(boot, 40);
     return () => {
       cancelled = true;
       window.clearTimeout(t);

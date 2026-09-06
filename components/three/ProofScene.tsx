@@ -1,8 +1,8 @@
 "use client";
 
 /**
- * 4D-forward scene: rotating tesseract (hypercube) projected into 3D,
- * plus orbital energy. Tuned for GPU cost without dropping the look.
+ * Playful background playground: jelly blobs, cursor chase, bounce flock.
+ * Keeps the aqua palette; optimized enough to stay smooth.
  */
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
@@ -20,8 +20,6 @@ type ProofSceneProps = {
   className?: string;
   intensity?: number;
 };
-
-type Vec4 = [number, number, number, number];
 
 function useScrollProgress() {
   const scroll = useRef(0);
@@ -66,146 +64,10 @@ function usePointer() {
   return pointer;
 }
 
-function rotate4(v: Vec4, t: number, s: number): Vec4 {
-  // Dual-plane 4D rotation (XW + YZ) — time + scroll as the fourth axis feel
-  const a = t * 0.55 + s * 1.2;
-  const b = t * 0.38 - s * 0.7;
-  const [x, y, z, w] = v;
-  const cosA = Math.cos(a);
-  const sinA = Math.sin(a);
-  const cosB = Math.cos(b);
-  const sinB = Math.sin(b);
-  const x1 = x * cosA - w * sinA;
-  const w1 = x * sinA + w * cosA;
-  const y1 = y * cosB - z * sinB;
-  const z1 = y * sinB + z * cosB;
-  // Extra XZ / YW twist for richer 4D motion
-  const c = t * 0.22;
-  const cosC = Math.cos(c);
-  const sinC = Math.sin(c);
-  const x2 = x1 * cosC - z1 * sinC;
-  const z2 = x1 * sinC + z1 * cosC;
-  const d = t * 0.17 + s * 0.4;
-  const cosD = Math.cos(d);
-  const sinD = Math.sin(d);
-  const y2 = y1 * cosD - w1 * sinD;
-  const w2 = y1 * sinD + w1 * cosD;
-  return [x2, y2, z2, w2];
-}
-
-function project4(v: Vec4, distance = 3.2): [number, number, number] {
-  const scale = distance / (distance - v[3]);
-  return [v[0] * scale, v[1] * scale, v[2] * scale];
-}
-
-function Tesseract({
-  scroll,
-  pointer
-}: {
-  scroll: React.MutableRefObject<number>;
-  pointer: React.MutableRefObject<{ x: number; y: number }>;
-}) {
-  const linesRef = useRef<THREE.LineSegments>(null);
-  const pointsRef = useRef<THREE.Points>(null);
-  const group = useRef<THREE.Group>(null);
-
-  const { positions, indices, baseVerts } = useMemo(() => {
-    const verts: Vec4[] = [];
-    for (let i = 0; i < 16; i++) {
-      verts.push([
-        i & 1 ? 1 : -1,
-        i & 2 ? 1 : -1,
-        i & 4 ? 1 : -1,
-        i & 8 ? 1 : -1
-      ]);
-    }
-    const edgeIdx: number[] = [];
-    for (let i = 0; i < 16; i++) {
-      for (let j = i + 1; j < 16; j++) {
-        let bits = 0;
-        for (let k = 0; k < 4; k++) if (verts[i][k] !== verts[j][k]) bits++;
-        if (bits === 1) edgeIdx.push(i, j);
-      }
-    }
-    return {
-      baseVerts: verts,
-      indices: new Uint16Array(edgeIdx),
-      positions: new Float32Array(16 * 3)
-    };
-  }, []);
-
-  const lineGeo = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geo.setIndex(new THREE.BufferAttribute(indices, 1));
-    return geo;
-  }, [positions, indices]);
-
-  const pointGeo = useMemo(() => {
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    return geo;
-  }, [positions]);
-
-  useFrame((state) => {
-    const t = state.clock.elapsedTime;
-    const s = scroll.current;
-    for (let i = 0; i < 16; i++) {
-      const p = project4(rotate4(baseVerts[i], t, s));
-      positions[i * 3] = p[0] * 1.05;
-      positions[i * 3 + 1] = p[1] * 1.05;
-      positions[i * 3 + 2] = p[2] * 1.05;
-    }
-    lineGeo.attributes.position.needsUpdate = true;
-    pointGeo.attributes.position.needsUpdate = true;
-
-    if (group.current) {
-      group.current.position.set(
-        pointer.current.x * 0.4,
-        0.15 + Math.sin(t * 0.7) * 0.12 - s * 0.4,
-        Math.sin(t * 0.4) * 0.15
-      );
-      group.current.rotation.y = t * 0.15 + pointer.current.x * 0.2;
-      group.current.scale.setScalar(1.05 + Math.sin(t * 1.1) * 0.04 + s * 0.12);
-    }
-  });
-
-  return (
-    <group ref={group}>
-      <lineSegments ref={linesRef} geometry={lineGeo}>
-        <lineBasicMaterial color="#0f9e8f" transparent opacity={0.85} />
-      </lineSegments>
-      <points ref={pointsRef} geometry={pointGeo}>
-        <pointsMaterial
-          color="#0b2c38"
-          size={0.09}
-          sizeAttenuation
-          transparent
-          opacity={0.9}
-        />
-      </points>
-      {/* Inner glass volume — physical transmission is much cheaper than MeshTransmission */}
-      <mesh scale={0.85}>
-        <icosahedronGeometry args={[1, 1]} />
-        <meshPhysicalMaterial
-          color="#e8f8fb"
-          transmission={0.92}
-          thickness={1.4}
-          roughness={0.08}
-          metalness={0.05}
-          ior={1.45}
-          transparent
-          opacity={1}
-          attenuationColor="#0f9e8f"
-          attenuationDistance={2.2}
-          clearcoat={1}
-          clearcoatRoughness={0.15}
-          envMapIntensity={0.8}
-        />
-      </mesh>
-    </group>
-  );
-}
+const sphereGeo = new THREE.SphereGeometry(1, 28, 28);
+const octaGeo = new THREE.OctahedronGeometry(1, 0);
+const tetraGeo = new THREE.TetrahedronGeometry(1, 0);
+const icosaGeo = new THREE.IcosahedronGeometry(1, 0);
 
 function CameraRig({
   scroll,
@@ -218,192 +80,289 @@ function CameraRig({
   useFrame((state) => {
     const t = state.clock.elapsedTime;
     const s = scroll.current;
-    const breathe = Math.sin(t * 0.55) * 0.1;
-    const targetX = pointer.current.x * 0.75 + Math.sin(t * 0.35) * 0.2;
-    const targetY = 0.4 + pointer.current.y * -0.3 - s * 0.85 + breathe;
-    const targetZ = 6.2 - s * 2.2 + Math.cos(t * 0.28) * 0.28;
-    camera.position.x += (targetX - camera.position.x) * 0.07;
-    camera.position.y += (targetY - camera.position.y) * 0.07;
-    camera.position.z += (targetZ - camera.position.z) * 0.06;
-    camera.lookAt(
-      pointer.current.x * 0.3,
-      0.08 - s * 0.5 + Math.sin(t * 0.4) * 0.06,
-      0
-    );
+    const targetX = pointer.current.x * 0.55 + Math.sin(t * 0.25) * 0.15;
+    const targetY = 0.35 + pointer.current.y * -0.25 - s * 0.7;
+    const targetZ = 7 - s * 1.8;
+    camera.position.x += (targetX - camera.position.x) * 0.06;
+    camera.position.y += (targetY - camera.position.y) * 0.06;
+    camera.position.z += (targetZ - camera.position.z) * 0.05;
+    camera.lookAt(pointer.current.x * 0.2, -s * 0.35, 0);
   });
   return null;
 }
 
-const sphereGeo = new THREE.SphereGeometry(1, 32, 32);
-const octaGeo = new THREE.OctahedronGeometry(1, 0);
-
-function DistortOrb({
-  position,
-  color,
-  speed,
-  scroll
+/** Big jelly center that wobbles and leans toward the cursor */
+function JellyHero({
+  scroll,
+  pointer
 }: {
-  position: [number, number, number];
-  color: string;
-  speed: number;
   scroll: React.MutableRefObject<number>;
+  pointer: React.MutableRefObject<{ x: number; y: number }>;
 }) {
   const ref = useRef<THREE.Mesh>(null);
-  const base = useMemo(() => new THREE.Vector3(...position), [position]);
+  const vel = useRef({ x: 0, y: 0 });
 
   useFrame((state) => {
     if (!ref.current) return;
-    const t = state.clock.elapsedTime * speed;
+    const t = state.clock.elapsedTime;
     const s = scroll.current;
-    ref.current.position.set(
-      base.x + Math.sin(t * 1.3) * 0.55,
-      base.y + Math.cos(t * 1.1) * 0.45 - s * 0.7,
-      base.z + Math.sin(t * 0.8) * 0.4 + s * 1.2
-    );
-    ref.current.rotation.x = t * 0.9;
-    ref.current.rotation.y = t * 1.2;
+    const targetX = pointer.current.x * 1.1;
+    const targetY = pointer.current.y * -0.55 + Math.sin(t * 1.2) * 0.2 - s * 0.35;
+    vel.current.x += (targetX - ref.current.position.x) * 0.04;
+    vel.current.y += (targetY - ref.current.position.y) * 0.04;
+    vel.current.x *= 0.86;
+    vel.current.y *= 0.86;
+    ref.current.position.x += vel.current.x;
+    ref.current.position.y += vel.current.y;
+    ref.current.position.z = Math.sin(t * 0.6) * 0.25;
+    ref.current.rotation.x = t * 0.35 + vel.current.y * 0.8;
+    ref.current.rotation.y = t * 0.55 + vel.current.x * 0.8;
+    const squash = 1 + Math.sin(t * 2.4) * 0.08 + Math.abs(vel.current.x) * 0.35;
+    const stretch = 1 + Math.cos(t * 2.1) * 0.06 + Math.abs(vel.current.y) * 0.25;
+    ref.current.scale.set(squash, stretch, 1.15 + Math.sin(t * 1.7) * 0.08);
   });
 
   return (
-    <Float speed={2} rotationIntensity={1.1} floatIntensity={0.9}>
-      <mesh ref={ref} scale={0.52} geometry={sphereGeo}>
-        <MeshDistortMaterial
-          color={color}
-          transparent
-          opacity={0.55}
-          roughness={0.15}
-          metalness={0.35}
-          distort={0.4}
-          speed={3}
-          emissive={color}
-          emissiveIntensity={0.35}
-        />
-      </mesh>
-    </Float>
+    <mesh ref={ref} geometry={sphereGeo} scale={1.35}>
+      <MeshDistortMaterial
+        color="#5ec4b8"
+        transparent
+        opacity={0.72}
+        roughness={0.12}
+        metalness={0.2}
+        distort={0.55}
+        speed={4}
+        emissive="#0f9e8f"
+        emissiveIntensity={0.45}
+      />
+    </mesh>
   );
 }
 
-function TrailRunner({
-  radius,
-  speed,
-  y,
-  color,
-  scroll
+/** Little shapes that bounce around and flee the cursor */
+function BounceFlock({
+  scroll,
+  pointer
 }: {
-  radius: number;
-  speed: number;
-  y: number;
-  color: string;
   scroll: React.MutableRefObject<number>;
+  pointer: React.MutableRefObject<{ x: number; y: number }>;
 }) {
-  const ref = useRef<THREE.Mesh>(null);
+  const group = useRef<THREE.Group>(null);
+  const agents = useMemo(
+    () =>
+      Array.from({ length: 12 }, (_, i) => ({
+        pos: new THREE.Vector3(
+          (Math.random() - 0.5) * 6,
+          (Math.random() - 0.5) * 4,
+          (Math.random() - 0.5) * 3 - 1
+        ),
+        vel: new THREE.Vector3(
+          (Math.random() - 0.5) * 0.04,
+          (Math.random() - 0.5) * 0.04,
+          (Math.random() - 0.5) * 0.02
+        ),
+        scale: 0.18 + (i % 4) * 0.06,
+        spin: 0.8 + (i % 5) * 0.3,
+        kind: i % 3,
+        color: ["#0f9e8f", "#0b2c38", "#2bb3a3", "#7ee0d4"][i % 4]
+      })),
+    []
+  );
 
   useFrame((state) => {
-    if (!ref.current) return;
-    const t = state.clock.elapsedTime * speed;
+    if (!group.current) return;
+    const t = state.clock.elapsedTime;
     const s = scroll.current;
-    const wobble = 1 + Math.sin(t * 2.2) * 0.12;
-    ref.current.position.set(
-      Math.cos(t) * radius * wobble,
-      y + Math.sin(t * 1.7) * 0.35 - s * 0.55,
-      Math.sin(t) * radius * wobble + s * 0.9
-    );
+    const px = pointer.current.x * 3.2;
+    const py = pointer.current.y * -2.2;
+
+    agents.forEach((a, i) => {
+      const child = group.current!.children[i] as THREE.Mesh;
+      if (!child) return;
+
+      // Flee cursor when close
+      const dx = a.pos.x - px;
+      const dy = a.pos.y - py;
+      const dist = Math.sqrt(dx * dx + dy * dy) + 0.001;
+      if (dist < 2.2) {
+        a.vel.x += (dx / dist) * 0.012;
+        a.vel.y += (dy / dist) * 0.012;
+      }
+
+      // Soft wander + bounce in a box
+      a.vel.x += Math.sin(t * 0.7 + i) * 0.0008;
+      a.vel.y += Math.cos(t * 0.9 + i * 1.3) * 0.0008;
+      a.vel.multiplyScalar(0.985);
+      a.pos.add(a.vel);
+
+      const boundX = 4.2;
+      const boundY = 2.8;
+      const boundZ = 2.5;
+      if (a.pos.x > boundX || a.pos.x < -boundX) {
+        a.vel.x *= -0.9;
+        a.pos.x = THREE.MathUtils.clamp(a.pos.x, -boundX, boundX);
+      }
+      if (a.pos.y > boundY || a.pos.y < -boundY) {
+        a.vel.y *= -0.9;
+        a.pos.y = THREE.MathUtils.clamp(a.pos.y, -boundY, boundY);
+      }
+      if (a.pos.z > boundZ || a.pos.z < -boundZ) {
+        a.vel.z *= -0.9;
+        a.pos.z = THREE.MathUtils.clamp(a.pos.z, -boundZ, boundZ);
+      }
+
+      child.position.set(a.pos.x, a.pos.y - s * 0.6, a.pos.z);
+      child.rotation.x = t * a.spin;
+      child.rotation.y = t * a.spin * 0.7;
+      const bounce = 1 + Math.abs(a.vel.x + a.vel.y) * 8;
+      child.scale.setScalar(a.scale * bounce);
+    });
   });
 
   return (
-    <Trail width={0.5} length={7} color={color} attenuation={(w) => w * w} decay={1.5}>
-      <mesh ref={ref} scale={0.11} geometry={octaGeo}>
+    <group ref={group}>
+      {agents.map((a, i) => (
+        <mesh
+          key={i}
+          geometry={a.kind === 0 ? octaGeo : a.kind === 1 ? tetraGeo : icosaGeo}
+        >
+          <meshStandardMaterial
+            color={a.color}
+            transparent
+            opacity={0.75}
+            roughness={0.25}
+            metalness={0.35}
+            emissive={a.color}
+            emissiveIntensity={0.35}
+            wireframe={i % 4 === 0}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+/** Ribbon that lazily chases the cursor */
+function CursorSnake({
+  pointer,
+  scroll
+}: {
+  pointer: React.MutableRefObject<{ x: number; y: number }>;
+  scroll: React.MutableRefObject<number>;
+}) {
+  const ref = useRef<THREE.Mesh>(null);
+  const pos = useRef(new THREE.Vector3(0, 0, 0));
+
+  useFrame((state) => {
+    if (!ref.current) return;
+    const target = new THREE.Vector3(
+      pointer.current.x * 3.5,
+      pointer.current.y * -2.2 - scroll.current * 0.4,
+      0.8 + Math.sin(state.clock.elapsedTime) * 0.3
+    );
+    pos.current.lerp(target, 0.08);
+    ref.current.position.copy(pos.current);
+    ref.current.rotation.x = state.clock.elapsedTime * 2.2;
+    ref.current.rotation.z = state.clock.elapsedTime * 1.6;
+  });
+
+  return (
+    <Trail width={0.85} length={12} color="#0f9e8f" attenuation={(w) => w} decay={1.1}>
+      <mesh ref={ref} scale={0.16} geometry={octaGeo}>
         <meshStandardMaterial
-          color={color}
-          emissive={color}
-          emissiveIntensity={1.3}
-          roughness={0.2}
-          metalness={0.6}
+          color="#0b2c38"
+          emissive="#0f9e8f"
+          emissiveIntensity={1.6}
+          roughness={0.15}
+          metalness={0.55}
         />
       </mesh>
     </Trail>
   );
 }
 
-function OrbitRing({
+function OrbitBuddy({
   radius,
   speed,
-  tilt,
-  scroll
+  y,
+  color,
+  scroll,
+  geo
 }: {
   radius: number;
   speed: number;
-  tilt: number;
+  y: number;
+  color: string;
   scroll: React.MutableRefObject<number>;
+  geo: THREE.BufferGeometry;
 }) {
   const ref = useRef<THREE.Mesh>(null);
   useFrame((state) => {
     if (!ref.current) return;
-    ref.current.rotation.x = tilt + Math.sin(state.clock.elapsedTime * 0.3) * 0.15;
-    ref.current.rotation.z = state.clock.elapsedTime * speed;
-    ref.current.position.y = -0.1 - scroll.current * 0.35;
-    ref.current.scale.setScalar(1 + Math.sin(state.clock.elapsedTime * 0.8) * 0.06);
+    const t = state.clock.elapsedTime * speed;
+    const wobble = 1 + Math.sin(t * 2) * 0.15;
+    ref.current.position.set(
+      Math.cos(t) * radius * wobble,
+      y + Math.sin(t * 1.4) * 0.45 - scroll.current * 0.5,
+      Math.sin(t) * radius * wobble
+    );
+    ref.current.rotation.x = t * 1.5;
+    ref.current.rotation.y = t * 1.1;
   });
+
   return (
-    <mesh ref={ref}>
-      <torusGeometry args={[radius, 0.016, 12, 96]} />
-      <meshStandardMaterial
-        color="#0f9e8f"
-        transparent
-        opacity={0.42}
-        roughness={0.2}
-        metalness={0.7}
-        emissive="#0f9e8f"
-        emissiveIntensity={0.5}
-      />
-    </mesh>
+    <Float speed={2.5} rotationIntensity={1.2} floatIntensity={1}>
+      <mesh ref={ref} scale={0.35} geometry={geo}>
+        <meshPhysicalMaterial
+          color={color}
+          transmission={0.7}
+          thickness={0.8}
+          roughness={0.1}
+          metalness={0.1}
+          transparent
+          opacity={0.9}
+          emissive={color}
+          emissiveIntensity={0.25}
+        />
+      </mesh>
+    </Float>
   );
 }
 
-function CrystalField({ scroll }: { scroll: React.MutableRefObject<number> }) {
-  const mesh = useRef<THREE.InstancedMesh>(null);
-  const dummy = useMemo(() => new THREE.Object3D(), []);
-  const crystals = useMemo(
-    () =>
-      Array.from({ length: 14 }, (_, i) => {
-        const a = (i / 14) * Math.PI * 2;
-        return {
-          x: Math.cos(a) * (2.4 + (i % 3) * 0.35),
-          y: ((i % 5) - 2) * 0.45,
-          z: Math.sin(a) * (2.1 + (i % 4) * 0.3),
-          scale: 0.12 + (i % 4) * 0.04
-        };
-      }),
-    []
-  );
-
+function PlayRing({
+  scroll,
+  speed,
+  radius,
+  tilt
+}: {
+  scroll: React.MutableRefObject<number>;
+  speed: number;
+  radius: number;
+  tilt: number;
+}) {
+  const ref = useRef<THREE.Mesh>(null);
   useFrame((state) => {
-    if (!mesh.current) return;
+    if (!ref.current) return;
     const t = state.clock.elapsedTime;
-    const s = scroll.current;
-    crystals.forEach((c, i) => {
-      dummy.position.set(c.x, c.y - s * 0.8, c.z);
-      dummy.rotation.set(t * 0.4 + i, t * 0.55 + i * 0.2, 0);
-      dummy.scale.setScalar(c.scale);
-      dummy.updateMatrix();
-      mesh.current!.setMatrixAt(i, dummy.matrix);
-    });
-    mesh.current.rotation.y = t * 0.18;
-    mesh.current.instanceMatrix.needsUpdate = true;
+    ref.current.rotation.x = tilt + Math.sin(t * 0.5) * 0.35;
+    ref.current.rotation.y = t * speed * 0.4;
+    ref.current.rotation.z = t * speed;
+    ref.current.position.y = Math.sin(t * 0.7) * 0.2 - scroll.current * 0.3;
+    ref.current.scale.setScalar(1 + Math.sin(t * 1.5) * 0.08);
   });
-
   return (
-    <instancedMesh ref={mesh} args={[octaGeo, undefined, crystals.length]}>
+    <mesh ref={ref}>
+      <torusGeometry args={[radius, 0.04, 12, 80]} />
       <meshStandardMaterial
-        color="#0b2c38"
+        color="#0f9e8f"
         transparent
-        opacity={0.65}
-        roughness={0.25}
-        metalness={0.4}
+        opacity={0.5}
         emissive="#0f9e8f"
-        emissiveIntensity={0.2}
+        emissiveIntensity={0.6}
+        roughness={0.2}
+        metalness={0.5}
       />
-    </instancedMesh>
+    </mesh>
   );
 }
 
@@ -415,50 +374,67 @@ function SceneContents() {
     <>
       <AdaptiveDpr />
       <color attach="background" args={["#cfeaf3"]} />
-      <fog attach="fog" args={["#cfeaf3", 7, 20]} />
-      <ambientLight intensity={0.8} />
-      <directionalLight position={[5, 7, 4]} intensity={1.25} color="#ffffff" />
-      <directionalLight position={[-4, 2, -3]} intensity={0.75} color="#0f9e8f" />
-      <pointLight position={[0, 2, 2]} intensity={1.05} color="#7ee0d4" distance={12} />
+      <fog attach="fog" args={["#cfeaf3", 8, 22]} />
+      <ambientLight intensity={0.85} />
+      <directionalLight position={[4, 6, 3]} intensity={1.2} color="#ffffff" />
+      <directionalLight position={[-3, 2, -2]} intensity={0.7} color="#0f9e8f" />
+      <pointLight position={[0, 1.5, 2]} intensity={1.3} color="#7ee0d4" distance={14} />
 
-      <Tesseract scroll={scroll} pointer={pointer} />
-      <OrbitRing radius={2.15} speed={0.35} tilt={Math.PI / 2.5} scroll={scroll} />
-      <OrbitRing radius={2.8} speed={-0.22} tilt={Math.PI / 3.2} scroll={scroll} />
-      <OrbitRing radius={3.4} speed={0.14} tilt={Math.PI / 2.1} scroll={scroll} />
+      <JellyHero scroll={scroll} pointer={pointer} />
+      <BounceFlock scroll={scroll} pointer={pointer} />
+      <CursorSnake pointer={pointer} scroll={scroll} />
 
-      <DistortOrb position={[-2.4, 0.8, -1]} color="#0f9e8f" speed={0.7} scroll={scroll} />
-      <DistortOrb position={[2.5, -0.4, -1.4]} color="#1a6b78" speed={0.55} scroll={scroll} />
-      <DistortOrb position={[0.2, 1.6, -2]} color="#5ec4b8" speed={0.85} scroll={scroll} />
+      <OrbitBuddy
+        radius={2.4}
+        speed={0.7}
+        y={0.6}
+        color="#5ec4b8"
+        scroll={scroll}
+        geo={sphereGeo}
+      />
+      <OrbitBuddy
+        radius={3.1}
+        speed={-0.45}
+        y={-0.4}
+        color="#0f9e8f"
+        scroll={scroll}
+        geo={icosaGeo}
+      />
+      <OrbitBuddy
+        radius={2.7}
+        speed={0.55}
+        y={1.1}
+        color="#1a6b78"
+        scroll={scroll}
+        geo={octaGeo}
+      />
 
-      <TrailRunner radius={2.3} speed={1.1} y={0.4} color="#0f9e8f" scroll={scroll} />
-      <TrailRunner radius={2.9} speed={-0.75} y={-0.2} color="#2bb3a3" scroll={scroll} />
-      <TrailRunner radius={3.4} speed={0.55} y={0.9} color="#0b2c38" scroll={scroll} />
-
-      <CrystalField scroll={scroll} />
+      <PlayRing scroll={scroll} speed={0.4} radius={2.2} tilt={Math.PI / 2.4} />
+      <PlayRing scroll={scroll} speed={-0.28} radius={3.0} tilt={Math.PI / 3.1} />
 
       <Sparkles
-        count={70}
-        scale={[10, 7, 8]}
-        size={2.2}
-        speed={0.85}
-        opacity={0.5}
+        count={80}
+        scale={[11, 8, 9]}
+        size={2.6}
+        speed={1.1}
+        opacity={0.55}
         color="#0f9e8f"
       />
       <Sparkles
-        count={28}
-        scale={[8, 5, 6]}
-        size={3.5}
-        speed={0.3}
-        opacity={0.22}
+        count={35}
+        scale={[9, 6, 7]}
+        size={4}
+        speed={0.4}
+        opacity={0.28}
         color="#ffffff"
       />
 
       <ContactShadows
-        position={[0, -1.55, 0]}
-        opacity={0.3}
-        scale={14}
-        blur={2.4}
-        far={4.5}
+        position={[0, -1.7, 0]}
+        opacity={0.28}
+        scale={16}
+        blur={2.6}
+        far={5}
         resolution={256}
         color="#0b2c38"
       />
@@ -477,10 +453,9 @@ export default function ProofScene({ className, intensity = 1 }: ProofSceneProps
           antialias: true,
           alpha: true,
           powerPreference: "high-performance",
-          stencil: false,
-          depth: true
+          stencil: false
         }}
-        camera={{ position: [0, 0.4, 6.2], fov: 42, near: 0.1, far: 50 }}
+        camera={{ position: [0, 0.35, 7], fov: 42, near: 0.1, far: 50 }}
         style={{ width: "100%", height: "100%" }}
         frameloop="always"
         performance={{ min: 0.5 }}

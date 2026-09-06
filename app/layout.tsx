@@ -80,8 +80,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <span className="bottom-[-10%] left-[30%] h-[24rem] w-[24rem] bg-sky-300/45" style={{animationDelay:"4s"}} />
         </div>
         <Cursor />
-        <SceneMount className="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-95" />
-        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-white/10 via-transparent to-[#cfeaf3]/55" />
+        <SceneMount className="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-100" />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-white/5 via-transparent to-[#cfeaf3]/35" />
         <Navbar />
         <div className="relative z-10">{children}</div>
         <Footer />

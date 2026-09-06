@@ -24,7 +24,7 @@ export default function ProjectStrip({ project, index }: ProjectStripProps) {
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] lg:gap-16">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-signal">
-            {String(index + 1).padStart(2, "0")} — {project.subtitle}
+            {String(index + 1).padStart(2, "0")} · {project.subtitle}
           </p>
           {project.href ? (
             <a

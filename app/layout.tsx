@@ -28,11 +28,11 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://aryan-daga.vercel.app"),
   title: {
-    default: "Aryan Daga | Verification & Program Analysis",
+    default: "Aryan Daga | CMU SCS · Wincent",
     template: "%s | Aryan Daga"
   },
   description:
-    "CS @ CMU (ML & CompFi), GPA 3.89. QT/QR intern at Wincent — live crypto strategies. Previously AI research engineering at EY and founding-team SWE at Otaru AI.",
+    "CS @ CMU (ML & CompFi), GPA 3.89. QT/QR intern at Wincent. Previously AI research engineering at EY and founding-team SWE at Otaru AI.",
   openGraph: {
     title: "Aryan Daga | CMU SCS · Wincent QT/QR",
     description:
@@ -75,8 +75,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <span className="bottom-[-10%] left-[30%] h-[24rem] w-[24rem] bg-sky-300/45" style={{animationDelay:"4s"}} />
         </div>
         <Cursor />
-        <SceneMount className="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-70" />
-        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-white/30 via-transparent to-[#cfeaf3]/85" />
+        <SceneMount className="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-85" />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-white/20 via-transparent to-[#cfeaf3]/75" />
         <Navbar />
         <div className="relative z-10">{children}</div>
         <Footer />

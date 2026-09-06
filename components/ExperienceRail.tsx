@@ -31,8 +31,7 @@ export default function ExperienceRail({
             Path so far.
           </h2>
           <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
-            One role per side of the spine — dated and tilted into the glass.
-            Full career page:{" "}
+            One role per side of the spine, with dates. Full list on{" "}
             <a href="/work" className="text-signal underline-offset-4 hover:underline">
               Work
             </a>

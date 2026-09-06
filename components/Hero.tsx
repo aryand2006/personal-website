@@ -36,10 +36,7 @@ export default function Hero() {
           <span className="text-signal">DAGA</span>
         </h1>
 
-        <p className="mt-8 max-w-2xl text-xl leading-snug text-bone sm:text-2xl">
-          {profile.thesis}
-        </p>
-        <p className="mt-4 max-w-xl text-base leading-relaxed text-boneDim sm:text-lg">
+        <p className="mt-8 max-w-xl text-base leading-relaxed text-boneDim sm:text-lg">
           {profile.blurb}
         </p>
 
@@ -49,10 +46,10 @@ export default function Hero() {
             data-cursor
             className="inline-flex items-center rounded-lg bg-signal px-6 py-3.5 font-display text-sm font-semibold tracking-wide text-white transition hover:brightness-110"
           >
-            See experience
+            Experience
           </Link>
           <Link
-            href="/work"
+            href="/projects"
             className="glass rounded-lg px-5 py-3.5 font-mono text-xs uppercase tracking-[0.2em] text-bone transition hover:text-signal"
           >
             Projects
@@ -70,11 +67,9 @@ export default function Hero() {
 
       <motion.div
         style={{ opacity: fade }}
-        className="pointer-events-none absolute bottom-8 right-0 z-10 hidden max-w-[14rem] text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.22em] text-steel md:block"
+        className="pointer-events-none absolute bottom-8 right-0 z-10 hidden max-w-[12rem] text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.22em] text-steel md:block"
       >
-        scroll —
-        <br />
-        aqua geometry moves with you
+        scroll
       </motion.div>
     </section>
   );

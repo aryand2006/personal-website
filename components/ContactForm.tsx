@@ -16,7 +16,7 @@ export default function ContactForm() {
         Start a conversation
       </p>
       <p className="text-sm leading-relaxed text-boneDim">
-        Quant, systems, founding-team work — or a chess challenge.
+        Quant, systems, founding-team work, or a chess challenge.
       </p>
 
       <label className="block space-y-2">

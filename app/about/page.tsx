@@ -20,13 +20,10 @@ export default function AboutPage() {
           About
         </p>
         <h1 className="font-display mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
-          Hi — I&apos;m Aryan.
+          Hi, I&apos;m Aryan.
         </h1>
         <p className="mt-6 text-lg leading-relaxed text-boneDim sm:text-xl">
           {profile.blurb}
-        </p>
-        <p className="mt-4 text-lg leading-relaxed text-bone sm:text-xl">
-          {profile.thesis}
         </p>
       </header>
 

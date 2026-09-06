@@ -18,8 +18,7 @@ export default function WorkPage() {
           Where I&apos;ve shipped.
         </h1>
         <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
-          Internships and roles from LinkedIn + resume — Wincent, EY, Otaru,
-          SKIDOS — not the project catalog. For builds, see{" "}
+          Internships: Wincent, EY, Otaru, SKIDOS. For repos, see{" "}
           <Link href="/projects" className="text-signal underline-offset-4 hover:underline">
             Projects
           </Link>

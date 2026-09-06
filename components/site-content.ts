@@ -35,9 +35,7 @@ export const profile = {
   linkedin: "https://linkedin.com/in/aryan-daga",
   github: "https://github.com/aryand2006",
   blurb:
-    "CS undergrad at Carnegie Mellon (SCS) with concentrations in Machine Learning and Computational Finance. I move between quant research, AI systems, and founding-team engineering — and I'm always up for a chess match.",
-  thesis:
-    "Models and backtests produce answers. I build the instruments that decide whether those answers deserve trust."
+    "CS undergrad at Carnegie Mellon (SCS) with concentrations in Machine Learning and Computational Finance. I work across quant research, AI systems, and founding-team engineering. Always up for a chess match."
 };
 
 export const education = {
@@ -67,11 +65,11 @@ export const experience: Experience[] = [
   {
     org: "Wincent",
     role: "Quantitative Research / Trading Intern",
-    when: "Jun 2026 — Jul 2026",
+    when: "Jun 2026 - Jul 2026",
     summary:
       "Took a crypto trading strategy full-cycle from research to live deployment with firm-allocated capital.",
     points: [
-      "Reverse-engineered structural and positioning drivers behind flagged assets — separating idiosyncratic signal from market beta",
+      "Reverse-engineered structural and positioning drivers behind flagged assets, separating idiosyncratic signal from market beta",
       "Built and backtested the systematic strategy in Python with full risk apparatus: stop-losses, position sizing, drawdown controls",
       "Traded live, monitoring real-time execution and analyzing divergence between live P&L and backtested expectations"
     ]
@@ -79,21 +77,21 @@ export const experience: Experience[] = [
   {
     org: "Ernst & Young (EY)",
     role: "AI Research Engineering Intern",
-    when: "May 2025 — Aug 2025",
+    when: "May 2025 - Aug 2025",
     summary:
       "Built a domain-specific research agent for EY’s Taxation Dept. with hybrid RAG and multi-source verification.",
     points: [
       "Hybrid stack: web retrieval (Tavily), contextual PDF retrieval (BM25 + semantic), JSON knowledge graphs",
       "Modular agents for prompt refinement, Llama 3 synthesis, and multi-source answer verification",
-      "Designed for tax researchers who need provenance — not vibes"
+      "Designed for tax researchers who need provenance, not guesswork"
     ]
   },
   {
     org: "Otaru AI",
     role: "Founding Team · Software Engineering Intern (Part-Time)",
-    when: "May 2025 — Aug 2025",
+    when: "May 2025 - Aug 2025",
     summary:
-      "Drove the prototype launch of Otaru’s sales-coaching platform — now used by 100+ beta reps.",
+      "Drove the prototype launch of Otaru’s sales-coaching platform, now used by 100+ beta reps.",
     points: [
       "Adaptive adversarial personas for high-stakes client-call rehearsal; helped cut sales-rep ramp-up by ~80%",
       "Architected backend + LLM workflows on Python, Firebase, GCP (Cloud Functions, Firestore, Compute Engine), LangChain",
@@ -105,7 +103,7 @@ export const experience: Experience[] = [
     role: "Project Intern",
     when: "Earlier",
     summary:
-      "Product innovation for an edtech games company — shipped educational games and an AI mock-interview assistant.",
+      "Product innovation for an edtech games company. Shipped educational games and an AI mock-interview assistant.",
     points: [
       "Developed 3 educational games that collectively generated ~$23K in new revenue",
       "Built an AI-driven mock interview assistant on OpenAI’s DaVinci model",
@@ -161,14 +159,14 @@ export const projects: Project[] = [
     title: "Options & Equities Trading System",
     subtitle: "Personal · Live Markets",
     description:
-      "Stochastic-calculus pricing and risk framework deployed in live markets across equities and options — GBM, Black-Scholes, Monte Carlo for tail risk, with a custom C++ backtesting engine.",
+      "Stochastic-calculus pricing and risk framework deployed in live markets across equities and options - GBM, Black-Scholes, Monte Carlo for tail risk, with a custom C++ backtesting engine.",
     highlights: [
       "VaR-constrained sizing and real-time drawdown monitoring",
       "Greeks decomposition (delta, gamma, theta, vega) with volatility-regime-aware hedging",
       "C++ engine: bid-ask-aware execution, slippage modeling, walk-forward validation"
     ],
     technologies: ["C++", "Python", "Stochastic Calculus", "Monte Carlo"],
-    focus: "Jan 2025 — Present",
+    focus: "Jan 2025 - Present",
     href: "https://github.com/aryand2006"
   },
   {
@@ -177,7 +175,7 @@ export const projects: Project[] = [
     description:
       "Sans-IO Raft key-value store with FoundationDB-style deterministic simulation, fault injection, and Wing–Gong linearizability checking.",
     highlights: [
-      "Partitions, crashes, loss, reorder — same seed replays any failure",
+      "Partitions, crashes, loss, reorder - same seed replays any failure",
       "Election + state-machine safety monitors on every campaign",
       "500 randomized fault seeds with zero failures in smoke"
     ],
@@ -259,7 +257,7 @@ export const projects: Project[] = [
     title: "HumBox",
     subtitle: "1st Place · Anthropic Speedrun Hackathon",
     description:
-      "Shipped a full music-creation tool in a 1.5-hour sprint — hum, tap, or describe a melody into a live 16-step sequencer.",
+      "Shipped a full music-creation tool in a 1.5-hour sprint - hum, tap, or describe a melody into a live 16-step sequencer.",
     highlights: [
       "Removes the DAW / music-theory barrier for non-musicians",
       "Natural-language + hummed/tapped input paths",
@@ -272,7 +270,7 @@ export const projects: Project[] = [
     title: "affidavit",
     subtitle: "Research-Governance Gate",
     description:
-      "One-command deployability gate that swears whether a backtest survives falsification — selection reconstitution, DoF, cost tilt, placebos, leak probe.",
+      "One-command deployability gate that swears whether a backtest survives falsification - selection reconstitution, DoF, cost tilt, placebos, leak probe.",
     highlights: [
       "Ex-ante portfolio reconstitution in money terms",
       "Hash-chained sworn JSON artifact",
@@ -293,7 +291,7 @@ export const interests = [
 ];
 
 export const humanBits = [
-  "Chess — always up for a match",
+  "Chess, always up for a match",
   "Swimming, running, hiking, rock climbing",
   "Badminton, table tennis, skiing, mini golf",
   "Based in New York City · CMU in Pittsburgh"

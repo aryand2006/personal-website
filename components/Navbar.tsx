@@ -21,6 +21,9 @@ export default function Navbar() {
     setOpen(false);
   }, [pathname]);
 
+  // Contact lives only as the right-side CTA (not also in the center nav).
+  const links = navLinks.filter((l) => l.href !== "/contact");
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
@@ -33,7 +36,7 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => {
+          {links.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
@@ -71,7 +74,7 @@ export default function Navbar() {
       {open && (
         <div className="glass border-t border-signal/10 px-5 py-6 md:hidden">
           <div className="flex flex-col gap-4">
-            {navLinks.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -80,6 +83,12 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <Link
+              href="/contact"
+              className="font-display text-2xl font-semibold tracking-tight text-signal"
+            >
+              Contact
+            </Link>
           </div>
         </div>
       )}

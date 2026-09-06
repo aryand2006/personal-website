@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { profile, education } from "@/components/site-content";
+import { education } from "@/components/site-content";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -11,13 +11,13 @@ export default function Hero() {
     target: ref,
     offset: ["start start", "end start"]
   });
-  const fade = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
-  const rise = useTransform(scrollYProgress, [0, 0.65], [0, -64]);
+  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const rise = useTransform(scrollYProgress, [0, 0.7], [0, -80]);
 
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100svh] w-full flex-col justify-end pb-16 pt-28 sm:pb-24 sm:pt-32"
+      className="relative flex min-h-[88svh] w-full flex-col justify-end pb-10 pt-28 sm:min-h-[92svh] sm:pb-16 sm:pt-32"
     >
       <motion.div style={{ opacity: fade, y: rise }} className="relative z-10 max-w-5xl">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[11px] uppercase tracking-[0.24em] text-boneDim">
@@ -36,17 +36,18 @@ export default function Hero() {
           <span className="text-signal">DAGA</span>
         </h1>
 
-        <p className="mt-8 max-w-xl text-base leading-relaxed text-boneDim sm:text-lg">
-          {profile.blurb}
+        <p className="mt-8 max-w-lg text-base leading-relaxed text-boneDim sm:text-lg">
+          CS at Carnegie Mellon. Quant research, AI systems, founding-team engineering.
+          Details live on the pages below.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
           <Link
-            href="/#experience"
+            href="/work"
             data-cursor
             className="inline-flex items-center rounded-lg bg-signal px-6 py-3.5 font-display text-sm font-semibold tracking-wide text-white transition hover:brightness-110"
           >
-            Experience
+            Work
           </Link>
           <Link
             href="/projects"
@@ -55,21 +56,19 @@ export default function Hero() {
             Projects
           </Link>
           <Link
-            href={profile.github}
-            target="_blank"
-            rel="noreferrer"
+            href="/about"
             className="font-mono text-xs uppercase tracking-[0.22em] text-boneDim transition hover:text-bone"
           >
-            GitHub ↗
+            About
           </Link>
         </div>
       </motion.div>
 
       <motion.div
         style={{ opacity: fade }}
-        className="pointer-events-none absolute bottom-8 right-0 z-10 hidden max-w-[12rem] text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.22em] text-steel md:block"
+        className="pointer-events-none absolute bottom-6 right-0 z-10 hidden max-w-[12rem] text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.22em] text-steel md:block"
       >
-        scroll
+        explore below
       </motion.div>
     </section>
   );

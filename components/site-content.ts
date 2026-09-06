@@ -29,6 +29,22 @@ export const heroTags = [
 export const projects: Project[] = [
 
   {
+    title: "stratum",
+    subtitle: "LSM Engine with Proven Crash Recovery",
+    description:
+      "Leveled LSM with CRC WAL, memtable, bloom SSTables, and compaction. A crashable in-memory VFS discards unsynced bytes; seeded campaigns verify durability and tombstones after reopen.",
+    highlights: [
+      "fsync-vs-crash modeled explicitly in the VFS",
+      "Torn WAL tails truncated safely on replay",
+      "L0 flush + L1 compaction preserving newest values",
+      "Property suite: durability, tombstones, read-your-writes, determinism"
+    ],
+    technologies: ["Go", "LSM", "WAL", "Crash Recovery"],
+    focus: "Storage you can reopen after death.",
+    href: "https://github.com/aryand2006/stratum"
+  },
+
+  {
     title: "scroll",
     subtitle: "Fault-Verified Partitioned Commit Log",
     description:

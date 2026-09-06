@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * Quiet premium scene: one glass form, one ring, two companions.
- * Motion clarifies depth. Nothing competes with the content.
+ * Sparse wire lattice — architectural, systems-y.
+ * Soft scroll + pointer parallax; nothing organic or bubbly.
  */
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { AdaptiveDpr, ContactShadows, Float } from "@react-three/drei";
+import { AdaptiveDpr, Line } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 
@@ -67,129 +67,170 @@ function CameraRig({
   const { camera } = useThree();
   useFrame(() => {
     const s = scroll.current;
-    const targetX = pointer.current.x * 0.22;
-    const targetY = 0.3 + pointer.current.y * -0.1 - s * 0.28;
-    const targetZ = 5.6 - s * 0.9;
-    camera.position.x += (targetX - camera.position.x) * 0.035;
-    camera.position.y += (targetY - camera.position.y) * 0.035;
-    camera.position.z += (targetZ - camera.position.z) * 0.03;
-    camera.lookAt(0, 0.05 - s * 0.2, 0);
+    const targetX = pointer.current.x * 0.35;
+    const targetY = 1.1 + pointer.current.y * -0.15 - s * 0.45;
+    const targetZ = 9.5 - s * 1.4;
+    camera.position.x += (targetX - camera.position.x) * 0.04;
+    camera.position.y += (targetY - camera.position.y) * 0.04;
+    camera.position.z += (targetZ - camera.position.z) * 0.035;
+    camera.lookAt(pointer.current.x * 0.15, 0.1 - s * 0.3, 0);
   });
   return null;
 }
 
-function GlassForm({
+function buildLattice(size: number, step: number) {
+  const half = (size * step) / 2;
+  const lines: [number, number, number][][] = [];
+
+  for (let y = 0; y <= size; y++) {
+    for (let z = 0; z <= size; z++) {
+      const yy = y * step - half;
+      const zz = z * step - half;
+      lines.push([
+        [-half, yy, zz],
+        [half, yy, zz]
+      ]);
+    }
+  }
+  for (let x = 0; x <= size; x++) {
+    for (let z = 0; z <= size; z++) {
+      const xx = x * step - half;
+      const zz = z * step - half;
+      lines.push([
+        [xx, -half, zz],
+        [xx, half, zz]
+      ]);
+    }
+  }
+  for (let x = 0; x <= size; x++) {
+    for (let y = 0; y <= size; y++) {
+      const xx = x * step - half;
+      const yy = y * step - half;
+      lines.push([
+        [xx, yy, -half],
+        [xx, yy, half]
+      ]);
+    }
+  }
+  return lines;
+}
+
+function WireLattice({
   scroll,
   pointer
 }: {
   scroll: React.MutableRefObject<number>;
   pointer: React.MutableRefObject<{ x: number; y: number }>;
 }) {
-  const ref = useRef<THREE.Mesh>(null);
+  const group = useRef<THREE.Group>(null);
+  const lines = useMemo(() => buildLattice(5, 1.15), []);
+
+  // Accent edges — a sparse subset that reads slightly brighter
+  const accents = useMemo(() => {
+    const picks: [number, number, number][][] = [];
+    for (let i = 0; i < lines.length; i += 17) {
+      picks.push(lines[i]);
+    }
+    return picks;
+  }, [lines]);
+
   useFrame((state) => {
-    if (!ref.current) return;
+    if (!group.current) return;
     const t = state.clock.elapsedTime;
     const s = scroll.current;
-    ref.current.position.set(
-      pointer.current.x * 0.12,
-      0.12 + Math.sin(t * 0.4) * 0.05 - s * 0.18,
-      0
-    );
-    ref.current.rotation.y = t * 0.1 + pointer.current.x * 0.08;
-    ref.current.rotation.x = t * 0.05 + pointer.current.y * 0.05;
+    group.current.rotation.y = t * 0.04 + pointer.current.x * 0.08;
+    group.current.rotation.x = 0.18 + Math.sin(t * 0.12) * 0.04 + pointer.current.y * 0.05;
+    group.current.rotation.z = Math.sin(t * 0.08) * 0.03;
+    group.current.position.y = -0.15 - s * 0.55;
+    group.current.position.z = s * 0.8;
   });
 
   return (
-    <mesh ref={ref} scale={1.25}>
-      <icosahedronGeometry args={[1, 1]} />
-      <meshPhysicalMaterial
-        color="#f2fafb"
-        transmission={0.92}
-        thickness={0.7}
-        roughness={0.18}
-        metalness={0.02}
-        ior={1.35}
-        transparent
-        opacity={1}
-        attenuationColor="#7eb8c4"
-        attenuationDistance={3.5}
-        clearcoat={0.6}
-        clearcoatRoughness={0.25}
-      />
-    </mesh>
+    <group ref={group} position={[0.4, 0, -1.2]} scale={1.05}>
+      {lines.map((pts, i) => (
+        <Line
+          key={`g-${i}`}
+          points={pts}
+          color="#0b2c38"
+          transparent
+          opacity={0.14}
+          lineWidth={1}
+        />
+      ))}
+      {accents.map((pts, i) => (
+        <Line
+          key={`a-${i}`}
+          points={pts}
+          color="#0f9e8f"
+          transparent
+          opacity={0.45}
+          lineWidth={1.25}
+        />
+      ))}
+    </group>
   );
 }
 
-function QuietCompanion({
-  position,
-  scale,
-  speed,
+/** A few floating nodes at lattice intersections — reads like a graph */
+function LatticeNodes({
   scroll,
-  wire
+  pointer
 }: {
-  position: [number, number, number];
-  scale: number;
-  speed: number;
   scroll: React.MutableRefObject<number>;
-  wire?: boolean;
+  pointer: React.MutableRefObject<{ x: number; y: number }>;
 }) {
-  const ref = useRef<THREE.Group>(null);
-  const base = useMemo(() => new THREE.Vector3(...position), [position]);
+  const group = useRef<THREE.Group>(null);
+  const nodes = useMemo(
+    () =>
+      [
+        [0, 0, 0],
+        [2.3, 1.15, -1.15],
+        [-2.3, -1.15, 1.15],
+        [1.15, -2.3, 0],
+        [-1.15, 2.3, 1.15],
+        [0, 1.15, 2.3],
+        [2.3, 0, 2.3]
+      ] as [number, number, number][],
+    []
+  );
 
   useFrame((state) => {
-    if (!ref.current) return;
+    if (!group.current) return;
     const t = state.clock.elapsedTime;
     const s = scroll.current;
-    ref.current.position.set(
-      base.x + Math.sin(t * speed) * 0.08,
-      base.y + Math.cos(t * speed * 0.7) * 0.06 - s * 0.25,
-      base.z + s * 0.5
-    );
-    ref.current.rotation.y = t * speed * 0.4;
-    ref.current.rotation.x = t * speed * 0.2;
+    group.current.rotation.y = t * 0.04 + pointer.current.x * 0.08;
+    group.current.rotation.x = 0.18 + pointer.current.y * 0.05;
+    group.current.position.y = -0.15 - s * 0.55;
+    group.current.position.z = s * 0.8;
+    group.current.children.forEach((child, i) => {
+      const pulse = 1 + Math.sin(t * 1.2 + i * 0.9) * 0.12;
+      child.scale.setScalar(pulse);
+    });
   });
 
   return (
-    <Float speed={0.7} rotationIntensity={0.12} floatIntensity={0.15}>
-      <group ref={ref} scale={scale}>
-        <mesh>
-          <octahedronGeometry args={[1, 0]} />
+    <group ref={group} position={[0.4, 0, -1.2]} scale={1.05}>
+      {nodes.map((p, i) => (
+        <mesh key={i} position={p}>
+          <sphereGeometry args={[0.045, 12, 12]} />
           <meshStandardMaterial
-            color={wire ? "#0f9e8f" : "#0b2c38"}
-            wireframe={!!wire}
-            transparent
-            opacity={wire ? 0.32 : 0.5}
-            roughness={0.45}
-            metalness={0.12}
+            color={i % 2 === 0 ? "#0f9e8f" : "#0b2c38"}
             emissive="#0f9e8f"
-            emissiveIntensity={wire ? 0.06 : 0.015}
+            emissiveIntensity={i % 2 === 0 ? 0.55 : 0.15}
+            roughness={0.35}
+            metalness={0.2}
           />
         </mesh>
-      </group>
-    </Float>
+      ))}
+    </group>
   );
 }
 
-function SoftRing({ scroll }: { scroll: React.MutableRefObject<number> }) {
-  const ref = useRef<THREE.Mesh>(null);
-  useFrame((state) => {
-    if (!ref.current) return;
-    ref.current.rotation.x = Math.PI / 2.55;
-    ref.current.rotation.z = state.clock.elapsedTime * 0.06;
-    ref.current.position.y = -0.05 - scroll.current * 0.12;
-  });
+function HorizonPlane() {
   return (
-    <mesh ref={ref}>
-      <torusGeometry args={[2.05, 0.012, 12, 96]} />
-      <meshStandardMaterial
-        color="#0f9e8f"
-        transparent
-        opacity={0.22}
-        roughness={0.35}
-        metalness={0.3}
-        emissive="#0f9e8f"
-        emissiveIntensity={0.06}
-      />
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -3.2, 0]}>
+      <planeGeometry args={[28, 28]} />
+      <meshBasicMaterial color="#cfeaf3" transparent opacity={0.35} />
     </mesh>
   );
 }
@@ -201,34 +242,14 @@ function SceneContents() {
   return (
     <>
       <AdaptiveDpr />
-      <ambientLight intensity={0.95} />
-      <directionalLight position={[4, 6, 3]} intensity={1.05} color="#ffffff" />
-      <directionalLight position={[-3, 1, -2]} intensity={0.4} color="#0f9e8f" />
+      <fog attach="fog" args={["#d7eef5", 8, 22]} />
+      <ambientLight intensity={0.9} />
+      <directionalLight position={[5, 8, 4]} intensity={0.85} color="#ffffff" />
+      <directionalLight position={[-4, 2, -3]} intensity={0.35} color="#0f9e8f" />
 
-      <GlassForm scroll={scroll} pointer={pointer} />
-      <SoftRing scroll={scroll} />
-      <QuietCompanion
-        position={[-2.05, 0.5, -1.1]}
-        scale={0.4}
-        speed={0.2}
-        scroll={scroll}
-        wire
-      />
-      <QuietCompanion
-        position={[1.95, -0.3, -1.5]}
-        scale={0.34}
-        speed={0.16}
-        scroll={scroll}
-      />
-      <ContactShadows
-        position={[0, -1.4, 0]}
-        opacity={0.22}
-        scale={12}
-        blur={2.8}
-        far={4}
-        resolution={256}
-        color="#0b2c38"
-      />
+      <WireLattice scroll={scroll} pointer={pointer} />
+      <LatticeNodes scroll={scroll} pointer={pointer} />
+      <HorizonPlane />
       <CameraRig scroll={scroll} pointer={pointer} />
     </>
   );
@@ -245,7 +266,7 @@ export default function ProofScene({ className, intensity = 1 }: ProofSceneProps
           powerPreference: "high-performance",
           stencil: false
         }}
-        camera={{ position: [0, 0.3, 5.6], fov: 40, near: 0.1, far: 40 }}
+        camera={{ position: [0, 1.1, 9.5], fov: 38, near: 0.1, far: 50 }}
         style={{ width: "100%", height: "100%", background: "transparent" }}
         frameloop="always"
         performance={{ min: 0.5 }}

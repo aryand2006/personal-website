@@ -10,52 +10,33 @@ export default function RepoCard({ repo }: RepoCardProps) {
   const updatedAt = new Date(repo.updatedAt).toLocaleDateString();
 
   return (
-    <article className="rounded-xl border border-slate-700/60 bg-card/70 p-5 transition hover:-translate-y-1 hover:border-primaryAccent/45">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 className="text-lg font-semibold tracking-tight text-slate-100">
-          {repo.name}
-        </h3>
-        <span
-          className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-            isPrivate
-              ? "border border-amber-400/35 bg-amber-400/10 text-amber-200"
-              : "border border-emerald-400/35 bg-emerald-400/10 text-emerald-200"
-          }`}
-        >
+    <article className="border border-bone/10 p-5 transition hover:border-signal/50">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h3 className="font-display text-xl font-bold tracking-tight">{repo.name}</h3>
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-steel">
           {isPrivate ? "Private" : "Public"}
         </span>
       </div>
 
-      <p className="mt-3 text-sm leading-7 text-mutedText">{repo.description}</p>
+      <p className="mt-3 text-sm leading-relaxed text-boneDim">{repo.description}</p>
 
-      <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-300">
-        <span className="rounded-md border border-slate-700/70 bg-slate-900/60 px-2 py-1">
-          {repo.language}
-        </span>
-        <span className="rounded-md border border-slate-700/70 bg-slate-900/60 px-2 py-1">
-          Stars: {repo.stars}
-        </span>
-        <span className="rounded-md border border-slate-700/70 bg-slate-900/60 px-2 py-1">
-          Forks: {repo.forks}
-        </span>
-        <span className="rounded-md border border-slate-700/70 bg-slate-900/60 px-2 py-1">
-          Updated: {updatedAt}
-        </span>
+      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.16em] text-steel">
+        <span>{repo.language}</span>
+        <span>★ {repo.stars}</span>
+        <span>Updated {updatedAt}</span>
       </div>
 
       <div className="mt-4">
         {isPrivate ? (
-          <span className="text-xs text-slate-400">
-            Link hidden for private repository visibility.
-          </span>
+          <span className="text-xs text-steel">Link hidden</span>
         ) : (
           <Link
             href={repo.url}
             target="_blank"
             rel="noreferrer"
-            className="text-sm font-medium text-primaryAccent transition hover:text-blue-300"
+            className="font-mono text-[11px] uppercase tracking-[0.18em] text-signal"
           >
-            View on GitHub
+            GitHub ↗
           </Link>
         )}
       </div>

@@ -8,15 +8,6 @@ export type Project = {
   href?: string;
 };
 
-export const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/work", label: "Work" },
-  { href: "/projects", label: "Projects" },
-  { href: "/writing", label: "Writing" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" }
-];
-
 export const heroTags = [
   "Distributed Systems",
   "Verification",
@@ -24,6 +15,15 @@ export const heroTags = [
   "Research Governance",
   "Falsification Gates",
   "CS @ CMU"
+];
+
+export const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/work", label: "Work" },
+  { href: "/projects", label: "Projects" },
+  { href: "/writing", label: "Writing" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" }
 ];
 
 export const projects: Project[] = [

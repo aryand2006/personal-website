@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ProjectCard from "@/components/ProjectCard";
+import ProjectStrip from "@/components/ProjectStrip";
 import RepoCard from "@/components/RepoCard";
 import { projects } from "@/components/site-content";
 import { getGitHubRepos } from "@/lib/github";
@@ -12,52 +12,56 @@ export default async function ProjectsPage() {
   const repos = await getGitHubRepos();
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-10 pb-8">
-      <header className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.22em] text-primaryAccent">
+    <div className="mx-auto w-full max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
+      <header className="max-w-2xl">
+        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
           Projects
         </p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Deep Build Logs
+        <h1 className="font-display mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
+          Build logs.
         </h1>
-        <p className="max-w-3xl text-sm leading-7 text-mutedText sm:text-base">
-          Practical AI systems engineered with a bias toward measurable reliability,
-          controllable behavior, and long-term maintainability.
+        <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
+          Flagship instruments plus public repositories — the ones you can clone
+          and try to break.
         </p>
       </header>
-      <div className="grid gap-6">
+
+      <div className="mt-16">
         {projects.map((project, index) => (
-          <ProjectCard key={`${project.title}-${index}`} project={project} index={index} />
+          <ProjectStrip
+            key={`${project.title}-${index}`}
+            project={project}
+            index={index}
+          />
         ))}
       </div>
 
-      <section className="space-y-4">
-        <div className="space-y-2">
-          <p className="text-xs uppercase tracking-[0.22em] text-primaryAccent">
-            GitHub Repositories
-          </p>
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Auto-Synced from GitHub
-          </h2>
-          <p className="max-w-3xl text-sm leading-7 text-mutedText sm:text-base">
-            Public repositories include direct links. Private repositories are
-            listed with context but without external links. Key repositories are
-            prioritized first.
-          </p>
-        </div>
-
+      <section className="mt-24 border-t border-bone/10 pt-16">
+        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
+          GitHub
+        </p>
+        <h2 className="font-display mt-3 text-3xl font-bold tracking-tight">
+          Live repositories
+        </h2>
         {repos.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
             {repos.map((repo) => (
               <RepoCard key={repo.id} repo={repo} />
             ))}
           </div>
         ) : (
-          <div className="rounded-xl border border-slate-700/60 bg-card/70 p-5 text-sm text-mutedText">
-            No repositories were fetched right now. If you want private repos to
-            appear, set `GITHUB_TOKEN` (repo scope) and `GITHUB_USERNAME` in
-            your environment.
-          </div>
+          <p className="mt-8 text-sm text-boneDim">
+            Repositories unavailable right now. Check{" "}
+            <a
+              href="https://github.com/aryand2006"
+              className="text-signal"
+              target="_blank"
+              rel="noreferrer"
+            >
+              github.com/aryand2006
+            </a>
+            .
+          </p>
         )}
       </section>
     </div>

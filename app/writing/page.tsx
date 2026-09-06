@@ -7,30 +7,32 @@ export const metadata: Metadata = {
 
 export default function WritingPage() {
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-10 pb-8">
-      <header className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.22em] text-primaryAccent">
+    <div className="mx-auto w-full max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
+      <header className="max-w-2xl">
+        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
           Writing
         </p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Notes on Building AI Systems
+        <h1 className="font-display mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
+          Notes.
         </h1>
-        <p className="max-w-3xl text-sm leading-7 text-mutedText sm:text-base">
-          Working drafts and essays on retrieval, architecture tradeoffs,
-          explainability, and practical lessons from building under constraint.
+        <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
+          Drafts on falsification, implementation risk, and instruments that
+          refuse to guess.
         </p>
       </header>
 
-      <div className="grid gap-4">
-        {writingPosts.map((post) => (
+      <div className="mt-16">
+        {writingPosts.map((post, index) => (
           <article
             key={post}
-            className="group rounded-xl border border-slate-700/60 bg-card/65 p-5 transition hover:-translate-y-1 hover:border-primaryAccent/50"
+            className="border-t border-bone/10 py-8 first:border-t-0"
           >
-            <p className="text-sm uppercase tracking-[0.2em] text-mutedText">
-              Coming Soon
+            <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-steel">
+              {String(index + 1).padStart(2, "0")} — Coming soon
             </p>
-            <h2 className="mt-2 text-xl font-medium text-slate-100">{post}</h2>
+            <h2 className="font-display mt-3 text-2xl font-bold tracking-tight text-bone sm:text-3xl">
+              {post}
+            </h2>
           </article>
         ))}
       </div>

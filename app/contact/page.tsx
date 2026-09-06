@@ -8,53 +8,54 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-10 pb-8">
-      <header className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.22em] text-primaryAccent">
+    <div className="mx-auto w-full max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
+      <header className="max-w-2xl">
+        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
           Contact
         </p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Let&apos;s Build Something Real
+        <h1 className="font-display mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
+          Say hello.
         </h1>
+        <p className="mt-5 text-base leading-relaxed text-boneDim sm:text-lg">
+          Open to technical collaborations, internships, and systems work where
+          falsification is part of the job.
+        </p>
       </header>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <article className="space-y-5 rounded-2xl border border-slate-700/70 bg-card/65 p-6 sm:p-8">
-          <p className="text-sm leading-7 text-mutedText sm:text-base">
-            Open to technical collaborations, internships, and high-impact
-            product builds where strong systems thinking creates a real edge.
+      <div className="mt-16 grid gap-16 lg:grid-cols-2">
+        <div className="space-y-6 font-mono text-sm uppercase tracking-[0.14em]">
+          <p>
+            <span className="block text-[10px] text-steel">Email</span>
+            <Link
+              href="mailto:aryand@andrew.cmu.edu"
+              className="mt-2 inline-block normal-case tracking-normal text-bone transition hover:text-signal"
+            >
+              aryand@andrew.cmu.edu
+            </Link>
           </p>
-          <div className="space-y-4 text-sm sm:text-base">
-            <p>
-              <span className="text-mutedText">Email: </span>
-              <Link href="mailto:aryand@andrew.cmu.edu" className="hover:text-primaryAccent">
-                aryand@andrew.cmu.edu
-              </Link>
-            </p>
-            <p>
-              <span className="text-mutedText">GitHub: </span>
-              <Link
-                href="https://github.com/aryand2006"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-primaryAccent"
-              >
-                github.com/aryand2006
-              </Link>
-            </p>
-            <p>
-              <span className="text-mutedText">LinkedIn: </span>
-              <Link
-                href="https://linkedin.com/in/aryan-daga"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-primaryAccent"
-              >
-                linkedin.com/in/aryan-daga
-              </Link>
-            </p>
-          </div>
-        </article>
+          <p>
+            <span className="block text-[10px] text-steel">GitHub</span>
+            <Link
+              href="https://github.com/aryand2006"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 inline-block normal-case tracking-normal text-bone transition hover:text-signal"
+            >
+              github.com/aryand2006
+            </Link>
+          </p>
+          <p>
+            <span className="block text-[10px] text-steel">LinkedIn</span>
+            <Link
+              href="https://linkedin.com/in/aryan-daga"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-2 inline-block normal-case tracking-normal text-bone transition hover:text-signal"
+            >
+              linkedin.com/in/aryan-daga
+            </Link>
+          </p>
+        </div>
         <ContactForm />
       </div>
     </div>

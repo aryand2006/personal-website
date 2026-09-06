@@ -1,41 +1,59 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Syne, Public_Sans, IBM_Plex_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AnimatedBackground from "@/components/AnimatedBackground";
-import AnimatedCursorGlow from "@/components/AnimatedCursorGlow";
+import SceneMount from "@/components/three/SceneMount";
+
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600", "700", "800"]
+});
+
+const publicSans = Public_Sans({
+  subsets: ["latin"],
+  variable: "--font-body",
+  weight: ["400", "500", "600"]
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "500"]
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://aryan-daga.vercel.app"),
   title: {
-    default: "Aryan Daga | AI Systems Builder",
+    default: "Aryan Daga | Verification & Program Analysis",
     template: "%s | Aryan Daga"
   },
   description:
-    "AI Systems Builder at Carnegie Mellon focused on multimodal memory, retrieval architectures, and agentic systems for production use.",
+    "CS @ Carnegie Mellon. Building falsification gates for machine-authored code and quantitative research — don't trust a result you can't verify.",
   openGraph: {
-    title: "Aryan Daga | AI Systems Builder",
+    title: "Aryan Daga | Verification & Program Analysis",
     description:
-      "Portfolio of AI systems projects spanning multimodal interaction, retrieval, agents, and quantitative modeling.",
+      "Instruments for verification: distributed systems, crash recovery, chaos resilience, and research governance.",
     url: "https://aryan-daga.vercel.app",
-    siteName: "Aryan Daga Portfolio",
+    siteName: "Aryan Daga",
     locale: "en_US",
     type: "website"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aryan Daga | AI Systems Builder",
+    title: "Aryan Daga | Verification & Program Analysis",
     description:
-      "Computer Science @ Carnegie Mellon. Building serious AI systems that reason, retrieve, and act."
+      "Don't trust a result you can't verify. CS @ Carnegie Mellon."
   },
   keywords: [
     "Aryan Daga",
-    "AI Engineer",
-    "Multimodal Systems",
-    "RAG",
-    "Agent Architectures",
-    "Carnegie Mellon"
+    "Verification",
+    "Program Analysis",
+    "Distributed Systems",
+    "Carnegie Mellon",
+    "Falsification"
   ]
 };
 
@@ -45,12 +63,16 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        <AnimatedCursorGlow />
-        <AnimatedBackground />
+    <html
+      lang="en"
+      className={`${syne.variable} ${publicSans.variable} ${plexMono.variable}`}
+    >
+      <body className="font-body antialiased">
+        <div className="grain" aria-hidden />
+        <SceneMount className="pointer-events-none fixed inset-0 -z-10 h-full w-full" />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-transparent via-ink/35 to-ink/85" />
         <Navbar />
-        <div className="px-4 pb-4 pt-8 sm:px-6 lg:px-8">{children}</div>
+        <div className="relative z-10">{children}</div>
         <Footer />
       </body>
     </html>

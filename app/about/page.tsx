@@ -8,8 +8,8 @@ const coreInterests = [
   "Program analysis and structural gates for agent-authored code",
   "Research governance for quantitative strategies",
   "Falsification tooling for backtests",
-  "Verification pipelines with human checkpoints",
-  "Computational finance methodology"
+  "Deterministic simulation of distributed systems",
+  "Crash recovery and chaos-bounded resilience"
 ];
 
 const enjoyList = [
@@ -21,46 +21,55 @@ const enjoyList = [
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-10 pb-8">
-      <header className="space-y-3">
-        <p className="text-xs uppercase tracking-[0.22em] text-primaryAccent">About</p>
-        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-          Don&apos;t Trust a Result You Can&apos;t Verify
+    <div className="mx-auto w-full max-w-6xl px-5 pb-24 pt-28 sm:px-8 sm:pt-32">
+      <header className="max-w-3xl">
+        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-signal">
+          About
+        </p>
+        <h1 className="font-display mt-4 text-4xl font-bold tracking-tight sm:text-6xl">
+          Don&apos;t trust a result you can&apos;t verify.
         </h1>
       </header>
 
-      <section className="rounded-2xl border border-slate-700/60 bg-card/65 p-6 leading-8 text-slate-200 sm:p-8 sm:text-lg">
+      <p className="mt-12 max-w-3xl text-lg leading-relaxed text-boneDim sm:text-xl">
         I&apos;m a Computer Science student at Carnegie Mellon working on
         program analysis and verification — the part of the stack that decides
         whether code or a backtest is actually correct, not just whether it
         runs or plots well.
-      </section>
+      </p>
 
-      <section className="grid gap-6 sm:grid-cols-2">
-        <article className="rounded-2xl border border-slate-700/60 bg-card/65 p-6 sm:p-8">
-          <h2 className="text-lg font-semibold">I&apos;m especially interested in:</h2>
-          <ul className="mt-4 space-y-3 text-sm text-slate-300 sm:text-base">
+      <div className="mt-20 grid gap-16 border-t border-bone/10 pt-16 lg:grid-cols-2">
+        <section>
+          <h2 className="font-display text-2xl font-bold tracking-tight">
+            Especially interested in
+          </h2>
+          <ul className="mt-6 space-y-0">
             {coreInterests.map((item) => (
-              <li key={item} className="flex gap-2">
-                <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-primaryAccent" />
-                <span>{item}</span>
+              <li
+                key={item}
+                className="border-b border-bone/10 py-4 text-sm leading-relaxed text-boneDim first:border-t first:border-bone/10"
+              >
+                {item}
               </li>
             ))}
           </ul>
-        </article>
-
-        <article className="rounded-2xl border border-slate-700/60 bg-card/65 p-6 sm:p-8">
-          <h2 className="text-lg font-semibold">I enjoy:</h2>
-          <ul className="mt-4 space-y-3 text-sm text-slate-300 sm:text-base">
+        </section>
+        <section>
+          <h2 className="font-display text-2xl font-bold tracking-tight">
+            I enjoy
+          </h2>
+          <ul className="mt-6 space-y-0">
             {enjoyList.map((item) => (
-              <li key={item} className="flex gap-2">
-                <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-secondaryAccent" />
-                <span>{item}</span>
+              <li
+                key={item}
+                className="border-b border-bone/10 py-4 text-sm leading-relaxed text-boneDim first:border-t first:border-bone/10"
+              >
+                {item}
               </li>
             ))}
           </ul>
-        </article>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }

@@ -2,64 +2,87 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/components/site-content";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   return (
-    <header className="sticky top-0 z-50 px-4 pt-3 sm:px-6 lg:px-8">
-      <div
-        className={`mx-auto flex max-w-7xl items-center justify-between rounded-2xl border px-4 py-3 transition-all duration-300 sm:px-6 ${
-          scrolled
-            ? "border-slate-700/70 bg-[#0b0f19]/80 shadow-glow backdrop-blur-xl"
-            : "border-slate-700/40 bg-[#0b0f19]/60 backdrop-blur-md"
-        }`}
-      >
-        <Link href="/" className="text-xl font-semibold tracking-tight">
-          aryan<span className="text-primaryAccent">.</span>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        scrolled ? "bg-ink/80 backdrop-blur-md" : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
+        <Link href="/" className="font-display text-lg font-bold tracking-tight">
+          aryan<span className="text-signal">daga</span>
         </Link>
 
-        <nav className="hidden items-center gap-1 sm:flex">
+        <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative rounded-md px-3 py-2 text-sm transition-colors ${
-                  active ? "text-primaryText" : "text-mutedText hover:text-primaryText"
+                className={`font-mono text-[11px] uppercase tracking-[0.2em] transition ${
+                  active ? "text-signal" : "text-boneDim hover:text-bone"
                 }`}
               >
                 {link.label}
-                {active && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    className="absolute inset-x-2 -bottom-[2px] h-0.5 rounded-full bg-primaryAccent"
-                  />
-                )}
               </Link>
             );
           })}
         </nav>
 
-        <Link
-          href="/contact"
-          className="rounded-lg border border-primaryAccent/50 bg-primaryAccent/15 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-primaryText transition hover:border-primaryAccent hover:bg-primaryAccent/25 sm:px-4"
-        >
-          Let&apos;s Talk
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/contact"
+            className="hidden border border-bone/25 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-bone transition hover:border-signal hover:text-signal sm:inline-flex"
+          >
+            Contact
+          </Link>
+          <button
+            type="button"
+            className="font-mono text-[11px] uppercase tracking-[0.2em] text-boneDim md:hidden"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label="Menu"
+          >
+            {open ? "Close" : "Menu"}
+          </button>
+        </div>
       </div>
+
+      {open && (
+        <div className="border-t border-bone/10 bg-ink/95 px-5 py-6 backdrop-blur-md md:hidden">
+          <div className="flex flex-col gap-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="font-display text-2xl font-semibold tracking-tight text-bone"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </header>
   );
 }

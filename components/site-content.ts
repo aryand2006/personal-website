@@ -29,6 +29,22 @@ export const heroTags = [
 export const projects: Project[] = [
 
   {
+    title: "grit",
+    subtitle: "Resilience Verified Under Chaos",
+    description:
+      "Netflix-shaped failure bounding: circuit breaker, bulkhead, and retry. A seeded campaign takes the dependency Down, requires trip + short-circuit, heals it, requires recovery, and checks protected attempts stay below an unprotected control.",
+    highlights: [
+      "Closed → open → half-open circuit with logical-time recovery",
+      "Bulkhead concurrency limit enforced under load",
+      "Cascade bound vs unprotected retry storm on the same seed",
+      "Deterministic chaos: same seed ⇒ identical trace hash"
+    ],
+    technologies: ["Go", "Circuit Breaker", "Chaos Engineering", "Deterministic Simulation"],
+    focus: "Don't trust redundancy you haven't killed on purpose.",
+    href: "https://github.com/aryand2006/grit"
+  },
+
+  {
     title: "aperture",
     subtitle: "Metrics Pipeline with Proven Anomaly Recall",
     description:

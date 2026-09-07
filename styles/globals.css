@@ -92,6 +92,15 @@ a {
   display: block;
 }
 
+.project-rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.project-rail::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import RepoCard from "@/components/RepoCard";
+import ProjectSlide from "@/components/ProjectSlide";
 import { profile } from "@/components/site-content";
 import { getPublicRepos } from "@/lib/github";
 import Link from "next/link";
@@ -40,11 +40,17 @@ export default async function ProjectsPage() {
         </p>
       </header>
 
-      <div className="mt-16 grid gap-4 md:grid-cols-2">
-        {repos.map((repo) => (
-          <RepoCard key={repo.id} repo={repo} />
+      <div className="mt-16">
+        {repos.map((repo, index) => (
+          <ProjectSlide
+            key={repo.id}
+            repo={repo}
+            index={index}
+            isLast={index === repos.length - 1}
+          />
         ))}
       </div>
+
       <div className="mt-14">
         <a
           href={profile.github}

@@ -267,6 +267,20 @@ export const projects: Project[] = [
     focus: "Apr 2025"
   },
   {
+    title: "falsify",
+    subtitle: "Live Verification Lab",
+    description:
+      "Interactive gates for sworn backtests, seeded agent fault simulation, and structural erosion — deterministic edge APIs, no LLM-as-judge.",
+    highlights: [
+      "Sworn ledger reconstitution + noise-floor Sharpe",
+      "agentsim poison / approval contract failures with seeds",
+      "sediment-style erosion rate on before/after Python"
+    ],
+    technologies: ["TypeScript", "Next.js", "Edge", "Verification"],
+    focus: "2026",
+    href: "https://falsify-lab.vercel.app"
+  },
+  {
     title: "affidavit",
     subtitle: "Research-Governance Gate",
     description:

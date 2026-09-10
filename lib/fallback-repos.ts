@@ -6,6 +6,20 @@ import type { RepoSummary } from "./github-types";
  */
 export const FALLBACK_PUBLIC_REPOS: RepoSummary[] = [
   {
+    id: 0,
+    name: "falsify",
+    description:
+      "Live verification lab — sworn certificates, agent fault sim, structural erosion. Deterministic gates, no LLM-as-judge.",
+    url: "https://github.com/aryand2006/falsify",
+    homepage: "https://falsify-lab.vercel.app",
+    language: "TypeScript",
+    stars: 0,
+    forks: 0,
+    updatedAt: "2026-09-10T12:00:00Z",
+    visibility: "public",
+    topics: []
+  },
+  {
     id: 1,
     name: "concord",
     description:
@@ -80,7 +94,7 @@ export const FALLBACK_PUBLIC_REPOS: RepoSummary[] = [
     name: "affidavit",
     description: "Swear whether a strategy result survives falsification.",
     url: "https://github.com/aryand2006/affidavit",
-    homepage: "",
+    homepage: "https://falsify-lab.vercel.app",
     language: "Python",
     stars: 0,
     forks: 0,
@@ -89,11 +103,25 @@ export const FALLBACK_PUBLIC_REPOS: RepoSummary[] = [
     topics: []
   },
   {
+    id: 10,
+    name: "agentsim",
+    description:
+      "Deterministic seeded fault simulation for tool-using AI agents.",
+    url: "https://github.com/aryand2006/agentsim",
+    homepage: "https://falsify-lab.vercel.app",
+    language: "Python",
+    stars: 0,
+    forks: 0,
+    updatedAt: "2026-09-10T06:47:54Z",
+    visibility: "public",
+    topics: []
+  },
+  {
     id: 7,
     name: "sediment",
     description: "A deterministic structural-erosion gate for machine-authored code.",
     url: "https://github.com/aryand2006/sediment",
-    homepage: "",
+    homepage: "https://falsify-lab.vercel.app",
     language: "Python",
     stars: 0,
     forks: 0,

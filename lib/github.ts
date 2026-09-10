@@ -24,13 +24,15 @@ type GitHubRepoApi = {
 const DEFAULT_USERNAME = "aryand2006";
 
 const KEY_REPO_NAMES = [
+  "falsify",
+  "sediment",
+  "affidavit",
+  "agentsim",
   "concord",
   "scroll",
   "stratum",
   "aperture",
   "grit",
-  "affidavit",
-  "sediment",
   "parallax",
   "assay",
   "clairvoyant",
